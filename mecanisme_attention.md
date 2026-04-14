@@ -58,7 +58,7 @@ Reste à savoir comment ceci à lieu. Avant d'aller plus loin, commençons par d
 
 Par exemple : Si l'on reprend notre exemple précédent (*"le chat rapide mange la souris grise"*) on va porter attention aux adjectifs relatifs à des noms (mais pas au fait qu'un verbe induise une modification). Nous verrons plus loin comment porter attention à plusieurs choses.
 
-#### Attention mono tête
+#### Auto attention mono tête
 
 Cela met en oeuvre 3 matrices : **Query**, **Key**, **Value**. Je les noterais respectivement $$Q_0$$, $$K_0$$, $$V_0$$. Voici à quoi elle servent.
 
@@ -78,15 +78,20 @@ La figure suivante présente le produit $$X \times Q_0$$ pour aider à la compr�
 
 ![matrice Query](Images\query.png)
 
-Si l'on reprend l'exemple de notre phrase, on voit dans cette image que le mot "souris" (deuxieme vecteur de la séquence, en jaune) emet une question ("qui est un adjectif pour moi ?"). Cette question est représentée par le vecteur en vert dans la matrice $$Q$$.
+Si l'on reprend l'exemple de notre phrase, on voit dans cette image que le mot "chat" (deuxieme vecteur de la séquence, en jaune) emet une question ("qui est un adjectif pour moi ?"). Cette question est représentée par le vecteur en vert dans la matrice $$Q$$.
 
 De la même façon, on va pouvoir calculer la matrice **Key**, correspondant aux réponses :
 
 ![matrice Key](Images\key.png)
 
-Dans cette image, on voit que le mot "grise" (3eme vecteur de la séquence, en mauve), emet une réponse ("Je suis un adjectif pour la souris"). Cette réponse est représentée par le vecteur en bleu dans la matrice.
+Dans cette image, on voit que le mot "rapide" (3eme vecteur de la séquence, en mauve), emet une réponse ("Je suis un adjectif pour le chat"). Cette réponse est représentée par le vecteur en bleu dans la matrice.
 
+J'attire votre attention sur le fait que les matrices $$Q_0$$ et $$K_0$$ sont liées au mécanisme d'attention (et seront donc propres au réseau de neurone qui les emploie).
 
+En revanche, les matrices $$Q$$ et $$K$$ sont les résultats de l'applications de ces matrices aux données traitées par le réseau. Ce sont des résultats intermédiaires du mécanisme d'attention appliqué à nos données (la phrase spécifique "le chat rapide mange la souris grise).
+
+L'objectif de ces questions et de ces réponses est de savoir qui doit modifier ceci. De fait,
+On calcule le produit scalaire entre les Query et les Key. Si les vecteurs correspondants aux mots 
 
 
 
