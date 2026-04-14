@@ -13,6 +13,8 @@ Une séquence d'entrée est une liste des items de la séquence. Notons $$s_s$$ 
 
 Une séquence peut donc se mettre sous la forme : $$ [X_1,...,X_{s_s}]$$, avec $$X_i = [x_1,...,x_{s_i}]$$
 
+On peut aussi la représenter sous une forme matricielle, comme dans l'image ci-dessous :
 
+![Une séquence sous forme matricielle](Images\sequence_initiale.png)
 
 
