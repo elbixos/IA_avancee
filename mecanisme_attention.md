@@ -43,6 +43,8 @@ Observons ce qui se passe pour le vecteur représentant la souris. Initialement,
 L'action du mécanisme d'attention est représentée dans la figure suivante.
 Le mécanisme d'attention va ajouter à ce vecteur initial "souris" (rouge) le vecteur "grise" pour obtenir une "souris grise". En ajoutant le vecteur "mort" à cette souris grise, on obtient le vecteur "souris grise morte" représenté en orange dans la figure suivante.
 
+![action de l'attention sur la souris](Images\vecteurs_semantiques_souris_après.png)
+
 Le 6eme vecteur de la séquence $$Y$$
 correspondra ainsi à "une souris grise morte". Ce vecteur porte ainsi de l'information plus pertinente pour les traitements que la simple "souris". L'information a été extraite à partir du contexte (ici, le reste de la phrase).
 
