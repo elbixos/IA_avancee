@@ -54,5 +54,39 @@ Si l'on résume : certains mots (comme "rapide", "grise", "mange") vont induire 
 
 #### Implémentation
 
-Reste à savoir comment ceci à lieu.
+Reste à savoir comment ceci à lieu. Avant d'aller plus loin, commençons par dire que le mécanisme d'attention n'est pas aussi générique que ce qui a été présenté auparavant. Quand on parle d'attention (mono tête), on parle de l'attention associée à un point particulier.
+
+Par exemple : Si l'on reprend notre exemple précédent (*"le chat rapide mange la souris grise"*) on va porter attention aux adjectifs relatifs à des noms (mais pas au fait qu'un verbe induise une modification). Nous verrons plus loin comment porter attention à plusieurs choses.
+
+#### Attention mono tête
+
+Cela met en oeuvre 3 matrices : **Query**, **Key**, **Value**. Je les noterais respectivement $$Q_0$$, $$K_0$$, $$V_0$$. Voici à quoi elle servent.
+
+1. La matrice **Query** va servir à poser une question, associée à chaque vecteur de la séquence. par exemple : "Quel mot est un adjectif associé à moi".
+2. la matrice **Key** va servir à chaque vecteur à répondre à cette question.
+3. La matrice **Value** va servir à calculer les modifications respectives à apporter à chaque vecteur.
+
+Plus précisément, on va calculer :
+
+- $$Q = X \times Q_0$$
+- $$K = X \times K_0$$
+- $$V = X \times V_0$$
+
+A noter : les deux matrices $$Q_0$$, $$K_0$$, sont de dimension $$s_i \times s_d$$, ou $$s_d$$ est fixé arbitrairement (nous en parlerons plus loin)
+
+La figure suivante présente le produit $$X \times Q_0$$ pour aider à la compréhension :
+
+![matrice Query](Images\query.png)
+
+Si l'on reprend l'exemple de notre phrase, on voit dans cette image que le mot "souris" (deuxieme vecteur de la séquence, en jaune) emet une question ("qui est un adjectif pour moi ?"). Cette question est représentée par le vecteur en vert dans la matrice $$Q$$.
+
+De la même façon, on va pouvoir calculer la matrice **Key**, correspondant aux réponses :
+
+![matrice Key](Images\key.png)
+
+Dans cette image, on voit que le mot "grise" (3eme vecteur de la séquence, en mauve), emet une réponse ("Je suis un adjectif pour la souris"). Cette réponse est représentée par le vecteur en bleu dans la matrice.
+
+
+
+
 
