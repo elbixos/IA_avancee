@@ -30,3 +30,7 @@ On peut alors imaginer qu'à l'issue du mécanisme d'attention, chaque mot de la
 - le mot *chat* porte maintenant l'information qu'il est *rapide* (du fait de l'adjectif "rapide"). Il porte aussi peut être l'information qu'il est *masculin*  (du fait de l'article "le"). Enfin, il est peut être *repu*, du fait qu'il a mangé une souris.
 - le mot *souris* porte maintenant l'information qu'elle est *grise* (du fait de l'adjectif "grise"), mais peut être aussi qu'elle est *morte*, puisqu'elle est mangée par le chat.
 
+La figure suivante représente une partie des différents vecteurs de la séquence d'entrée $X$ (*ainsi que la direction "mort", dont j'aurais besoin par la suite*).
+
+![vecteurs de la séquence d'entrée](Images\vecteurs_semantiques_init.png)
+
