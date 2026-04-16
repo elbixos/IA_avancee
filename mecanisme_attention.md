@@ -24,9 +24,9 @@ Voyons donc ceci de plus près.
 
 Comme on l'a dit, ces mécanismes d'attention ne sont utiles que pour le traitement de séquences (*eg : texte, séquence temporelle comme des sons, séquence spatiale comme les images*). Modélisons donc ces séquences.
 
-Une séquence d'entrée est une liste des items de la séquence. Notons $s$ la taille de cette séquence. On notera $e$ (comme *embedding*), la taille des vecteurs de la séquence.
+Une séquence d'entrée est une liste des vecteurs de la séquence. Notons $s$ la taille de cette séquence. On notera $e$ (comme *embedding*), la taille des vecteurs de la séquence.
 
-Une séquence $S$ peut donc se mettre sous la forme : $S = [X_1,...,X_{s_s}]$, avec $X_i = [X_{i,1},...,X_{i,e}]$
+Une séquence $X$ peut donc se mettre sous la forme : $X = [X_1,...,X_{s_s}]$, avec $X_i = [X_{i,1},...,X_{i,e}]$
 
 On peut aussi la représenter sous une forme matricielle, comme dans l'image ci-dessous :
 
@@ -34,7 +34,7 @@ On peut aussi la représenter sous une forme matricielle, comme dans l'image ci-
 
 L'idée des mécanismes d'attention est de transformer la séquence pour que chaque vecteur $X_i$ prenne en compte le **contexte** (les autres vecteurs de la séquence).
 
-la sequence d'entrée $X$ devient une séquence de sortie $Y$ dans laquelle chaque vecteur composant $Y$ prend en compte certains autres vecteurs de la séquence $X$.
+la séquence d'entrée $X$ devient une séquence de sortie $Y$ dans laquelle chaque vecteur composant $Y$ prend en compte certains autres vecteurs de la séquence $X$.
 
 Pour bien comprendre l'intérêt de cette attention, voyons deux débuts de phrases.
 
@@ -47,7 +47,7 @@ On voit ici clairement que le concept caché derriere le mot "souris" a dramatiq
 
 Prenons un exemple pour précisez les principes utilisés. Imaginons que notre séquence soit composée de mots. Par exemple, la phrase suivante : **le chat rapide mange la souris grise.**
 
-Supposons de plus que chaque mot soit encodé par un vecteur dans un espace sémantique (ou chaque direction possède un sens particulier), 
+Supposons de plus que chaque mot soit encodé par un vecteur dans un espace sémantique (ou chaque direction possède un sens particulier), dans l'espace des embedding de dimension $e$.
 
 On peut alors imaginer qu'à l'issue du mécanisme d'attention, chaque mot de la phrase soit modifié comme suit dans $Y$ :
 
@@ -70,7 +70,7 @@ Le mécanisme d'attention va ajouter à ce vecteur initial "souris" (rouge) le v
 Le 6eme vecteur de la séquence $Y$
 correspondra ainsi à "une souris grise morte". Ce vecteur porte ainsi de l'information plus pertinente pour les traitements que la simple "souris". L'information a été extraite à partir du contexte (ici, le reste de la phrase).
 
-De la même façon, le 2 vecteur $X$ deviendra dans $Y$ un vecteur signifiant "un chat rapide et repus".
+De la même façon, le 2 vecteur $X$ deviendra dans $Y$ un vecteur signifiant "un chat rapide et repu".
 
 Si l'on résume : certains mots (comme "rapide", "grise", "mange") vont induire des modifications ("rapide", "grise", "mort", "repu") sur certains mots de la phrase ("chat", "souris")
 
@@ -94,9 +94,7 @@ Plus précisément, on va calculer :
 - $K = X \times K^0$
 - $V = X \times V^0$
 
-A noter : les deux matrices $Q^0, $K^0$ prennent en entrée des vecteur de dimension $e$, comme ceux de $X$. Elles donnent en sortie des vecteurs de dimension $d$, où $d$ est fixé arbitrairement (nous en parlerons plus loin)
-
-Ces matrices sont donc de taille $e \times d$
+A noter : les deux matrices $Q^0, K^0$ prennent en entrée des vecteur de dimension $e$, comme ceux de $X$. Elles donnent en sortie des vecteurs de dimension $d$, où $d$ est fixé arbitrairement (nous en parlerons plus loin). Ces deux matrices sont donc de taille $e \times d$
 
 ### Matrice Query
 
@@ -104,7 +102,7 @@ La figure suivante présente le produit $X \times Q^0$ pour aider à la compréh
 
 ![matrice Query](Images\query.png)
 
-Si l'on reprend l'exemple de notre phrase, on voit dans cette image que le mot "chat" (deuxieme vecteur de la séquence, en jaune) emet une question ("qui est un adjectif pour moi ?"). Cette question est représentée par le vecteur en vert dans la matrice $Q$.
+Si l'on reprend l'exemple de notre phrase, on voit dans cette image que le mot "chat" (deuxieme vecteur de la séquence, en jaune) émet une question ("qui est un adjectif pour moi ?"). Cette question est représentée par le vecteur en vert dans la matrice $Q$.
 
 Cette matrice $Q$ est bien de taille $s \times d$ : chacun des $s$ vecteurs de la séquence dispose d'un vecteur de taille $d$ correspondant à la question qu'il souhaite poser.
 
@@ -114,7 +112,7 @@ De la même façon, on va pouvoir calculer la matrice **Key**, correspondant aux
 
 ![matrice Key](Images\key.png)
 
-Dans cette image, on voit que le mot "rapide" (3eme vecteur de la séquence, en mauve), emet une réponse ("Je suis un adjectif pour le chat"). Cette réponse est représentée par le vecteur en bleu dans la matrice.
+Dans cette image, on voit que le mot "rapide" (3eme vecteur de la séquence, en mauve), émet une réponse ("Je suis un adjectif pour le chat"). Cette réponse est représentée par le vecteur en bleu dans la matrice.
 
 il est important de noter que :
 
@@ -143,19 +141,19 @@ Ainsi, pour le mot "chat" dans notre exemple, le mot "rapide" est important. On 
 
 De même, on s'attend à ce que le coefficient $A^0_{6,7}$ correspondant à l'association de "grise" à "souris" soit grand.
 
-Une ligne de la matrice $A^0$, correspondant à un mot de la séquence nous indique donc le coefficient de pertinence de chaque autre mot de la phrase. Ce score de pertinence peut être positif ou négatif.
+Une ligne de la matrice $A^0$, correspondant à un mot de la séquence, nous indique donc, pour ce mot, le coefficient de pertinence de chaque autre mot de la phrase. Ce score de pertinence peut être positif ou négatif.
 
 *Quelques remarques sur la normalisation* :
 
 - Pour des raisons de stabilité, on divise $A^0$ par $\sqrt(d)$ avant la phase suivante.
 
-- Il est plus que fréquent que plusieurs mots influent sur le sens de d'un mot en particulier. Sur la ligne correspondant à ce mot, plusieurs coefficients vont être grands. On prend alors le *softmax* de chaque ligne pour obtenir des coefficients compris entre 0 et 1 et dont la somme vaut 1.
+- Dans le cas général, plusieurs mots influent sur le sens de d'un mot en particulier. Sur la ligne correspondant à ce mot, plusieurs coefficients vont être grands. On prend alors le *softmax* de chaque ligne pour obtenir des coefficients compris entre 0 et 1 et dont la somme vaut 1.
 
 On obtient ainsi la **matrice de pattern d'attention** :
 
-$$A = softmax(\frac{Q \times K\intercal}{\sqrt(d)})$$
+$$A = softmax(\frac{Q \times K^\intercal}{\sqrt(d)})$$
 
-Une ligne de cette matrice, correspondant à un mot de la séquence nous indique donc le coefficient de pertinence de chaque autre mot de la phrase.
+Une ligne de cette matrice, correspondant à un mot de la séquence nous indique donc, pour ce mot, le coefficient de pertinence de chaque autre mot de la phrase.
 
 ### Matrice Value
 
