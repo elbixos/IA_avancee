@@ -217,6 +217,8 @@ $$Y = X + V \times A$$
 
 Voilà pour le principe de l'implémentation d'une tête d'auto attention.
 
+*remarque : j'ai un probleme lié à mes représentations lignes/colonnes. la formule officielle dit :* $Y = X + A \times V$
+
 ### Quelques remarques supplémentaires.
 
 De fait, quelques détails sont important dans tout cela, en particulier quand on prend en compte les différentes dimensions impliquées.
@@ -229,11 +231,17 @@ Le réseau doit mémoriser, et apprendre les coefficients des matrices $Q^0, K^0
 Les deux premières ont pour dimension $e \times d$. En prenant $d$ plus petit que $e$, on réduit grandement la taille de ces matrices, donc à la fois la mémoire utilisée et le nombre de calculs effectués. Pour Bert, on utilise $d = 64$ pour une tête. Cela représente déja $~50 000$ paramètres pour chacune de ces matrices.
 
 Par ailleurs, la matrice $V^0$ est de dimension apparente $e \times e$. Dans notre cas, cela représenterait $~590 000$ paramètres.
-Pour éviter que cette matrice soit aussi grandes, elle est obtenue comme un produit de 2 matrices plus petites
+Pour éviter que cette matrice soit aussi grandes, elle est obtenue comme un produit de 2 matrices plus petites, que je vais noter $V^0_{down}$ et $V^0_{up}$. Celles ci sont prises de taille $e \times d$ pour rester cohérents.
 
-Si on laisse comme cela,
+La figure suivante présente comment on calcule $V^0$ en fonction de $V^0_{down}$ et $V^0_{up}$.
+
+![calcul precis v0](Images/calcul_precis_v0.png)
+
+Ainsi, pour une tête d'attention, le réseau mémorise et maintient 4 matrices de dimensions
+$e \times d$ (soit 50 000 parametres chacune si on conserve $e=768$ et $d=64$)
 
 ## Attention multi-tête
+
 
 ## Attention croisée
 
