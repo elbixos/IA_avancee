@@ -208,12 +208,12 @@ On peut faire tout ceci en une opération matricielle. Ci dessous, juste pour le
 
 On peut alors écrire la valeur de la sortie de notre tête d'attention pour ce mot en particulier :
 
-$$Y_6 = X_6 + V \times A_6$
+$$Y_6 = X_6 + V \times A_6$$
 
 De fait, ce calcul peut être fait pour l'ensemble de la séquence, en multipliant
 $V$ par la matrice de pattern d'attention.
 
-$$Y = X + V \times A$
+$$Y = X + V \times A$$
 
 Voilà pour le principe de l'implémentation d'une tête d'auto attention.
 
