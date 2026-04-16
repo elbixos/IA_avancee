@@ -1,5 +1,3 @@
-<script type="text/javascript" async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 # Les Mecanismes d'Attention
 
@@ -9,7 +7,7 @@ Ces mécanismes d'attentions sont connus depuis assez longtemps. Le très célè
 
 En revanche, sa présentation des mécanismes d'attention est notoirement compacte, puisqu'elle tient en une équation :
 
-$$Attention(Q,K,V) = softmax(\frac{Q \times K\intercal}{\sqrt(d)}) V $$
+$$Attention(Q,K,V) = softmax(\frac{Q \times K^\intercal}{\sqrt(d)}) V $$
 
 Voyons donc ceci de plus près.
 
@@ -75,7 +73,7 @@ Par exemple : Si l'on reprend notre exemple précédent (*"le chat rapide mange 
 
 Cet exemple d'une attention portée aux adjectifs est purement pédagogique. En réalité, les choses sont plus floues, le seul guide de l'attention étant la diminution de la loss...
 
-Cela met en oeuvre 3 matrices : **Query**, **Key**, **Value**. Je les noterais respectivement $Q_0$, $K_0$, $V_0$. Voici à quoi elle servent.
+Cela met en oeuvre 3 matrices : **Query**, **Key**, **Value**. Je les noterais respectivement $Q^0$, $K^0$, $V^0$. Voici à quoi elle servent.
 
 1. La matrice **Query** va servir à poser une question, associée à chaque vecteur de la séquence. par exemple : "Quel mot est un adjectif associé à moi".
 2. la matrice **Key** va servir à chaque vecteur à répondre à cette question.
@@ -161,7 +159,7 @@ Plus précisément, si l'on reprend notre exemple complet de phrase sans focalis
 
 Observons rapidement les dimensions de cette matrice $V^0$. Elle prend en entrée des vecteurs de la séquence, de taille $e$. En sortie, elle doit fournir un vecteur correspondant à une modification des vecteurs de la séquence. Les vecteurs en sortie, ont donc aussi une taille $e$.
 
-On en déduit que cette matrice a pour taille apparente $e \times e$. En voici une représentation ci dessous.
+On en déduit que cette matrice a pour taille apparente $e \times e$. *(nous reviendrons sur ce point plus loin)*. En voici une représentation ci dessous.
 
 ![matrice Value](Images\value.png)
 
