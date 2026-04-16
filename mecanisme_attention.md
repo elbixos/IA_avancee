@@ -92,7 +92,7 @@ Plus précisément, on va calculer :
 
 - $Q = X \times Q^0$
 - $K = X \times K^0$
-- $V = X \times V^0$
+- $V = V^0 \times X$
 
 A noter : les deux matrices $Q^0, K^0$ prennent en entrée des vecteur de dimension $e$, comme ceux de $X$. Elles donnent en sortie des vecteurs de dimension $d$, où $d$ est fixé arbitrairement (nous en parlerons plus loin). Ces deux matrices sont donc de taille $e \times d$
 
@@ -192,7 +192,8 @@ En fait, tous les éléments sont déjà là :
 - la matrice de **Value** nous indique quelle dans quelle direction modifier un vecteur pour qu'il prenne en compte le contexte lié à un autre vecteur.
 
 Voyons ce qui se passe de façon calculatoire.
-Reprenons le calcul concernant les modifications à apporter à notre souris
+Reprenons le calcul concernant les modifications à apporter à notre souris.
+Ici, j'imagine que les mots importants pour "souris" sont "la", "mange" et "grise".
 
 ![matrice de pattern d'attention](Images\attention_pour_un_mot.png)
 
@@ -203,18 +204,34 @@ Il faut donc ajouter au vecteur initial "souris" :
 
 On peut faire tout ceci en une opération matricielle. Ci dessous, juste pour le mot "souris".
 
-![calcul des modifications](Images/calcul_modif_attention.png.png)
+![calcul des modifications](Images/calcul_modif_attention.png)
 
 On peut alors écrire la valeur de la sortie de notre tête d'attention pour ce mot en particulier :
 
-$$Y_6 = X_6 + A^{\intercal}_6 \times V$
+$$Y_6 = X_6 + V \times A_6$
 
 De fait, ce calcul peut être fait pour l'ensemble de la séquence, en multipliant
-la transposée de la matrice de pattern d'attention par $V$.
+$V$ par la matrice de pattern d'attention.
 
-$$Y = X + A^{\intercal} \times V$
+$$Y = X + V \times A$
 
-Voilà pour l'implémentation d'une tête d'auto attention.
+Voilà pour le principe de l'implémentation d'une tête d'auto attention.
+
+### Quelques remarques supplémentaires.
+
+De fait, quelques détails sont important dans tout cela, en particulier quand on prend en compte les différentes dimensions impliquées.
+
+- une séquence, dans un systême comme BERT, c'est de l'ordre de 1024 vecteurs (s=1024)
+- Un vecteur est encodé dans un espace de dimensions 768 (e=768).
+
+Le réseau doit mémoriser, et apprendre les coefficients des matrices $Q^0, K^0$ et $V^0$.
+
+Les deux premières ont pour dimension $e \times d$. En prenant $d$ plus petit que $e$, on réduit grandement la taille de ces matrices, donc à la fois la mémoire utilisée et le nombre de calculs effectués. Pour Bert, on utilise $d = 64$ pour une tête. Cela représente déja $~50 000$ paramètres pour chacune de ces matrices.
+
+Par ailleurs, la matrice $V^0$ est de dimension apparente $e \times e$. Dans notre cas, cela représenterait $~590 000$ paramètres.
+Pour éviter que cette matrice soit aussi grandes, elle est obtenue comme un produit de 2 matrices plus petites
+
+Si on laisse comme cela,
 
 ## Attention multi-tête
 
