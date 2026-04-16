@@ -149,11 +149,18 @@ Une ligne de la matrice $A^0$, correspondant à un mot de la séquence, nous ind
 
 - Dans le cas général, plusieurs mots influent sur le sens de d'un mot en particulier. Sur la ligne correspondant à ce mot, plusieurs coefficients vont être grands. On prend alors le *softmax* de chaque ligne pour obtenir des coefficients compris entre 0 et 1 et dont la somme vaut 1.
 
-On obtient ainsi la **matrice de pattern d'attention** :
+On obtient ainsi la **matrice de pattern d'attention**, de dimension $s \times s$ :
 
 $$A = softmax(\frac{Q \times K^\intercal}{\sqrt(d)})$$
 
-Une ligne de cette matrice, correspondant à un mot de la séquence nous indique donc, pour ce mot, le coefficient de pertinence de chaque autre mot de la phrase.
+Une ligne de cette matrice, correspondant à un mot de la séquence nous indique donc, pour ce mot, le coefficient de pertinence de chaque autre mot de la phrase. Par exemple :
+
+![matrice de pattern d'attention](Images\pattern_attention_textuel.png)
+
+Dans cette matrice (fictive), si l'on s'intéresse aux modifications à apporter à "souris", on voit que les mots importants sont "mange","la", "grise". Les poids relatifs de chaque mot sont dans le vecteur correspondant,
+représenté ci dessous comme une ligne :
+
+![matrice de pattern d'attention](Images\attention_pour_un_mot.png)
 
 ### Matrice Value
 
@@ -162,6 +169,7 @@ La troisième matrice, la matrice **value** $V$, a pour objectif de calculer, po
 Plus précisément, si l'on reprend notre exemple complet de phrase sans focaliser sur les adjectifs, on voit que
 
 - le mot "grise" devrait modifier le mot "souris" pour lui ajouter une dimension de couleur grise.
+- le mot "rapide" devrait modifier le mot "souris" pour lui ajouter une dimension de déplacement.
 - le mot "mange" pourrait modifier le mot "souris" pour lui ajouter une dimension d'état mort **ou** il pourrait modifier le mot "chat" pour lui ajouter la dimension d'état repu (mais pas les deux en même temps).
 
 Observons rapidement les dimensions de cette matrice $V^0$. Elle prend en entrée des vecteurs de la séquence, de taille $e$. En sortie, elle doit fournir un vecteur correspondant à une modification des vecteurs de la séquence. Les vecteurs en sortie, ont donc aussi une taille $e$.
@@ -169,6 +177,55 @@ Observons rapidement les dimensions de cette matrice $V^0$. Elle prend en entré
 On en déduit que cette matrice a pour taille apparente $e \times e$. *(nous reviendrons sur ce point plus loin)*. En voici une représentation ci dessous.
 
 ![matrice Value](Images\value.png)
+
+Dans celle ci, un mot de la séquence, en mauve, va générer la modification à apporter aux mots concernés par ce contexte. C'est un vecteur de l'espace des embedding (de taille $e$), représenté en vert.
+
+- si l'on imagine que le vecteur violet correspond à "rapide", il va générer la modification à apporter "se déplace rapidement"
+- si l'on imagine que le vecteur violet correspond à "grise", il va générer la modification à apporter "de couleur grise".
+- si l'on imagine que le vecteur violet correspond à "mange", il pourrait générer la modification à apporter "mort" ou "repu" suivant ce sur quoi se porte notre attention.
+
+### Calcul de la sortie.
+
+En fait, tous les éléments sont déjà là :
+
+- la matrice de **pattern d'attention** $A$ nous indique quels vecteurs de la séquence sont importants pour quels autres.
+- la matrice de **Value** nous indique quelle dans quelle direction modifier un vecteur pour qu'il prenne en compte le contexte lié à un autre vecteur.
+
+Voyons ce qui se passe de façon calculatoire.
+Reprenons le calcul concernant les modifications à apporter à notre souris
+
+![matrice de pattern d'attention](Images\attention_pour_un_mot.png)
+
+Il faut donc ajouter au vecteur initial "souris" :
+- 0.10 fois le vecteur Value associé à "la"
+- 0.45 fois le vecteur Value associé à "mange"
+- 0.45 fois le vecteur Value associé à "grise"
+
+On peut faire tout ceci en une opération matricielle. Ci dessous, juste pour le mot "souris".
+
+![calcul des modifications](Images/calcul_modif_attention.png.png)
+
+On peut alors écrire la valeur de la sortie de notre tête d'attention pour ce mot en particulier :
+
+$$Y_6 = X_6 + A^{\intercal}_6 \times V$
+
+De fait, ce calcul peut être fait pour l'ensemble de la séquence, en multipliant
+la transposée de la matrice de pattern d'attention par $V$.
+
+$$Y = X + A^{\intercal} \times V$
+
+Voilà pour l'implémentation d'une tête d'auto attention.
+
+## Attention multi-tête
+
+## Attention croisée
+
+
+
+
+
+
+
 
 
 
