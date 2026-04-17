@@ -231,9 +231,10 @@ Le réseau doit mémoriser, et apprendre les coefficients des matrices $Q^0, K^0
 Les deux premières ont pour dimension $e \times d$. En prenant $d$ plus petit que $e$, on réduit grandement la taille de ces matrices, donc à la fois la mémoire utilisée et le nombre de calculs effectués. Pour Bert, on utilise $d = 64$ pour une tête. Cela représente déja $~50 000$ paramètres pour chacune de ces matrices.
 
 Par ailleurs, la matrice $V^0$ est de dimension apparente $e \times e$. Dans notre cas, cela représenterait $~590 000$ paramètres.
-Pour éviter que cette matrice soit aussi grandes, elle est obtenue comme un produit de 2 matrices plus petites, que je vais noter $V^{0}_{down}$ et $V^{0}_{up}$. Celles ci sont prises de taille $e \times d$ pour rester cohérents avec les tailles de $Q^0$ et $K^0$.
+Pour éviter que cette matrice soit aussi grandes, elle est obtenue comme un produit de 2 matrices plus petites, que je vais noter
+$V^{0} _{down}$ et $V^{0} _{up}$. Celles ci sont choisies de taille $e \times d$ pour rester cohérents avec les tailles de $Q^0$ et $K^0$.
 
-La figure suivante présente comment on calcule $V^0$ en fonction de $V^0_{down}$ et $V^0_{up}$.
+La figure suivante présente comment on calcule $V^0$ en fonction de $V^0 _{down}$ et $V^0 _{up}$.
 
 ![calcul precis v0](Images/calcul_precis_v0.png)
 
