@@ -242,6 +242,19 @@ $e \times d$ (soit 50 000 parametres chacune si on conserve $e=768$ et $d=64$)
 
 ## Attention multi-tête
 
+De fait, il est intéressant de proposer un mécanisme qui puisse porter son attention sur différents points. On peut penser, dans un objectif pédagogique à :
+
+- l'influence des adjectifs
+- l'influence des verbes sur les sujets
+- l'influence des verbes sur les compléments
+- l'influence des determinants de genre
+
+Pour cela, il suffit de faire plusieurs têtes d'attention. Notons $h$ le nombre de têtes (*h* pour *heads*). Chacune de ces têtes est déterminée par 4 matrices ($Q^0,K^0,V^{0}_{down},V^{0}_{up}$), de taille $e \times d$.
+Au total, on a donc $4 \times e \times d \times h$ paramètres.
+
+La sortie du module d'attention somme les modifications proposées par chaque tête d'attention.
+
+Dans la pratique, on garde souvent constant le produit $h \times d$. Cela permet de conserver constant le nombre de paramètres de l'ensemble des matrices. Dans Bert, $h \times d = 768$, 
 
 ## Attention croisée
 
