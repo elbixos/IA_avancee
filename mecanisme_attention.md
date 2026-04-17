@@ -8,11 +8,11 @@ MathJax = {
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
 
 
-# Les Mecanismes d'Attention
+# Les Blocs d'Attention
 
 On retrouve ces mécanismes dans les Transformers, évidemment, mais ils ont été repris un peu partout dans les réseaux de neurones qui **traitent des séquences**.
 
-Ces mécanismes d'attentions sont connus depuis assez longtemps. Le très célèbre article "Attention is All you need" présente le premier réseau non récurrent utilisant ces mécanismes d'attention.
+Ces mécanismes d'attentions sont connus depuis assez longtemps. Le très célèbre article "Attention is All you need" présente le premier réseau non récurrent utilisant ces mécanismes d'attention, sous forme de blocs.
 
 En revanche, sa présentation des mécanismes d'attention est notoirement compacte, puisqu'elle tient en une équation :
 
@@ -258,6 +258,53 @@ La sortie du module d'attention somme les modifications proposées par chaque t�
 Dans la pratique, on garde souvent constant le produit $h \times d$. Cela permet de conserver constant le nombre de paramètres de l'ensemble des matrices. Dans Bert, $h \times d = 768$, 
 
 ## Attention croisée
+
+Il est possible de travailler avec une attention multi-modale. C'est à dire qu'on veut modifier une séquence $X$ par mécanisme d'attention, mais l'attention est déterminée par une seconde séquence $X'$.
+
+Le plus simple est d'imaginer un exemple. On dispose d'une vidéo $X$. On peut imaginer que cette vidéo soit accompagnée d'un enregistrement sonore $X'$, ou certains bruits peuvent amener à modifier notre interprétation de certains pixels de $X$.
+
+De fait, dans ce cas, il suffit de travailler avec nos trois matrices $Q,K,V$, mais certaines feront appel à $X$, d'autres à $X'$, comme suit :
+
+- $Q = X \times Q^0$
+- $K = X' \times K^0$
+- $V = V^0 \times X'$
+
+Le reste se fait de la même façon.
+
+## Masquage causal
+
+Il arrive, en particulier lors de l'entrainement des blocs d'attention,
+que l'on veuille limiter l'attention que porte chaque vecteur de la séquence
+aux vecteurs qui le précèdent.
+
+Ainsi, un mot dans une séquence textuelle ne pourrait pas bénéficier du contexte lié aux mots qui sont situés plus loin dans la séquence.
+
+Dans ce cas, on dit qu'on **masque** certains éléments de la séquence.
+Dans la pratique, dans la matrice $A = Q \times K$, on remplace tous les éléments en dessous de la diagonale par $-\infty$. Ainsi, après calcul du *softmax*, la matrice de pattern d'attention aura la forme suivante :
+
+![Attention causale](Images/matrice_attention_masquee.png)
+
+## Résumé 
+
+Voici donc comment est constitué un bloc d'attention :
+
+$h$ têtes d'attentions mises en parallèle, chacune cherchant à enrichir une séquence d'entrée $X$ en fonction du contexte. Chaque tête porte attention à des choses différentes. Ce contexte peut être :
+
+- les autres vecteurs de $X$ dans le cas de l'**auto attention** (ou *self attention*).
+- les vecteurs d'une autre séquence $X'$ dans le cas de l'**attention croisee** (ou *crossed attention*).
+
+Une tête d'attention mémorise et apprend 4 matrices $Q^0,K^0, V^0 _{down}, V^0 _{up}$, de dimensions $e \times d$.
+
+- $e$ est la dimension d'embedding (la dimension d'un vecteur de la séquence)
+- $d$ est une dimension arbitraire (plus petite que $e$).
+
+Il faut noter que le bloc d'attention calcule à partir de ces matrices internes et des données d'entrées, 3 autres matrices : $Q,K,V$. $Q$ et $K$ sont de dimensions $s \times d$, avec $s$ la longueur de la séquence.
+
+Ces trois dimensions $s,e,d$, ainsi que le nombre de têtes $h$, jouent donc un role primordial dans la mémoire utilisée et le temps de calcul des blocs d'attention.
+
+
+
+
 
 
 
