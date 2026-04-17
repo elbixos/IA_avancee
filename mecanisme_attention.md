@@ -232,7 +232,7 @@ Les deux premières ont pour dimension $e \times d$. En prenant $d$ plus petit q
 
 Par ailleurs, la matrice $V^0$ est de dimension apparente $e \times e$. Dans notre cas, cela représenterait $~590 000$ paramètres.
 Pour éviter que cette matrice soit aussi grandes, elle est obtenue comme un produit de 2 matrices plus petites, que je vais noter
-$V^{0} _{down}$ et $V^{0} _{up}$. Celles ci sont choisies de taille $e \times d$ pour rester cohérents avec les tailles de $Q^0$ et $K^0$.
+$V^{0} _{down}$ et $V^{0}  _{up}$. Celles ci sont choisies de taille $e \times d$ pour rester cohérents avec les tailles de $Q^0$ et $K^0$.
 
 La figure suivante présente comment on calcule $V^0$ en fonction de $V^0 _{down}$ et $V^0 _{up}$.
 
@@ -250,7 +250,7 @@ De fait, il est intéressant de proposer un mécanisme qui puisse porter son att
 - l'influence des verbes sur les compléments
 - l'influence des determinants de genre
 
-Pour cela, il suffit de faire plusieurs têtes d'attention. Notons $h$ le nombre de têtes (*h* pour *heads*). Chacune de ces têtes est déterminée par 4 matrices ($Q^0,K^0,V^{0}_{down},V^{0}_{up}$), de taille $e \times d$.
+Pour cela, il suffit de faire plusieurs têtes d'attention. Notons $h$ le nombre de têtes (*h* pour *heads*). Chacune de ces têtes est déterminée par 4 matrices ($Q^0,K^0,V^{0} _{down},V^{0} _{up}$), de taille $e \times d$.
 Au total, on a donc $4 \times e \times d \times h$ paramètres.
 
 La sortie du module d'attention somme les modifications proposées par chaque tête d'attention.
