@@ -12,17 +12,19 @@ MathJax = {
 Comme dans toute [architecture encodeur/décodeur](encoder_decoder.md), l'objectif est de pouvoir travailler sur un problème **sequence to sequence**,
 et de produire **le prochain élement de la séquence de sortie**.
 
+## Architecture du décodeur
+
 Voyons donc l'architecture du décodeur, présentée ci-dessous :
 
 ![architecture du décodeur des Transformers](Images/decoder_transformers.png)
 
 Pour comprendre ce qu'il se passe, imaginons que notre Transformer fasse de la traduction anglais / francais, et, à partir de la phrase "cats eat mouses", il doive au final produire la séquence "les chats mangent des souris".
 
-Plus précisément, au stade qui nous intéresse, à partir du début de traduction "les chats mangent", il doivent produire le mot prochain mot de la séquence de sortie : le mot "des".
+Plus précisément, au stade qui nous intéresse, à partir du début de traduction "`<start>` les chats mangent", il doivent produire le mot prochain mot de la séquence de sortie : le mot "des".
 
 Commencons par la partie basse de la figure précédente :
 
-1. Comme dans l'encodeur, la séquence "les chats mangent" est encodée par un réseau dense, appris, de longueur $s \times e$. *J'imagine que la séquence subit un padding pour lui donner une longueur* $s$
+1. Comme dans l'encodeur, la séquence "`<start>` les chats mangent" est encodée par un réseau dense, appris, de longueur $s \times e$. *J'imagine que la séquence subit un padding pour lui donner une longueur* $s$
 2. Cet encodage est aussi complété par un encodage de position, ajouté à l'embedding.
 
 Ce sont ces outputs précédents, encodés, qui vont entrer dans la couche d'attention du décodeur que nous décrivons maintenant :
@@ -34,3 +36,13 @@ Ce sont ces outputs précédents, encodés, qui vont entrer dans la couche d'att
 Dans le décodeur, ces couches d'attention sont répétées $N$ fois, en série.
 
 Enfin, pour la prédiction finale du prochain token, on utilise un réseau feedforward qui possède $d_{dict}$ sorties, avec $d_{dict}$, le nombre de token possible dans le dictionnaire de langue francaise.
+
+## Eléments importants du décodeur
+
+En fait, j'ai un peu menti dans ce qui précède, pour mieux expliquer le principe sous-jacent. Nous allons ici être plus précis.
+
+Pour cela, observons la figure suivante :
+
+![decodeur all in one](Images/decodeur_all_in_one.png)
+
+
