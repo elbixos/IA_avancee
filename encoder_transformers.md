@@ -78,7 +78,7 @@ L'encodage est donné par 2 équations, en fonction de la parité de $p$:
 
 $$P_p(k) = sin(\frac{k}{n^{2i/e}}) ~~si~ p=2i$$
 
-$P_p(k) = cos(\frac{k}{n^{2i/e}}) ~~si~ p=2i+1$$
+$$P_p(k) = cos(\frac{k}{n^{2i/e}}) ~~si~ p=2i+1$$
 
 Dans l'article originel, la valeur de $n$ est fixée à $n=10000$.
 
