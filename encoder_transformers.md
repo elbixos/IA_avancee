@@ -105,7 +105,13 @@ Il faut noter que c'est cette partie qui va s'assurer que deux mots de sens proc
 
 Ainsi, la représentation de notre phrase initiale est passée d'une matrice de dimension $4 \times d_{dict}$ à une matrice de taille $4 \times e$. Néanmoins, les encodeurs travaillent souvent avec des séquences de taille fixe. Ceci peut être réglé à l'aide d'un simple **padding**, ramenant toute séquence à une matrice de taille $s \times e$.
 
+### Cas d'images
 
+Traitons rapidement un exemple fictif d'images. Un token dans un image peut être un pixel (un vecteur de taille $3$ pour une image RGB), ou un patch de $m$ pixels (un vecteur de taille $3 \times m$).
+
+Ici, encore, il faudra transformer ce token en un vecteur de dimension $e$, et la solution consistera en un simple réseau feed-forward de dimensions adaptées.
+
+En ce qui concerne la longueur de la séquence, les réseaux utilisant des transformers pour la vision sont souvent construits pour des images de taille fixe, ce qui règle le problème de séquences de taille variable.
 
 
 
