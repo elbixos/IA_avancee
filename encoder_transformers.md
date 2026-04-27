@@ -27,7 +27,7 @@ Comme on peut le voir, cette architecture est composée de :
 
 - Un bloc d'**encodage des entrées** (*Input embeddings*)
 - Un bloc d'**encodage des positions**.
-- une série de $N$ **couches d'attentions** en série. ($N=6$ dans l'article originel)
+- une série de $N$ **couches d'attention** en série. ($N=6$ dans l'article originel)
 
 Le bloc d'encodage des entrées produit en sortie une séquence de vecteurs.
 Chaque vecteur d'entrée sera traité indépendamment pour produire un vecteur de dimension $e$. Si l'on note $s$ la taille de la séquence, la sortie du bloc d'encodage associée à chaque séquence est un tenseur de taille $s \times e$
@@ -46,7 +46,7 @@ Dans chacune de ces couches, on trouve :
 - un bloc d'auto-attention multi-tête.
 - l'attention calculée par ce bloc est ajoutée au tenseur représentant la séquence. Chaque vecteur de la séquence est donc enrichi par le contexte donné par les autres vecteurs de la séquence.
 - La séquence est normalisée (**pas encore très clair**)
-- On traverse alors un réseau de neurone feedforward qui traite chaque vecteur de la séquence indépendamment et de la même façon. Ce réseau est composé, dans le papier originel, d'une couche cachée de $d_{ff} = 4 times e = 2048$ neurones et d'une couche de sortie de dimension $e$. Ces deux couches utilisent une fonction d'activation ReLU. Ce réseau interne modifie l'information associée à chaque vecteur. *Je ne sais pas trop à quoi cela sert, si ce n'est que ces réseaux apprennent, cela doit donc donner de la latitude à l'encodeur pour choisir la représentation de chaque séquence*.
+- On traverse alors un réseau de neurone feedforward qui traite chaque vecteur de la séquence indépendamment et de la même façon. Ce réseau est composé, dans le papier originel, d'une couche cachée de $d_{ff} = 4 \times e = 2048$ neurones et d'une couche de sortie de dimension $e$. Ces deux couches utilisent une fonction d'activation ReLU. Ce réseau interne modifie l'information associée à chaque vecteur. *Je ne sais pas trop à quoi cela sert, si ce n'est que ces réseaux apprennent, cela doit donc donner de la latitude à l'encodeur pour choisir la représentation de chaque séquence*.
 - Cette sortie du réseau feed-forward est ajoutée à la séquence et le tout encore une fois normalisé (**toujours pas clair**)
 
 Ainsi, la séquence en sortie d'une couche d'attention a forcément **la même taille** que la séquence en entrée.
@@ -55,6 +55,39 @@ Un certain nombre de couches d'attention sont ainsi enchainées, pour produire e
 
 Il est vraisemblable qu'empiler des couches d'attention plutôt que de faire des têtes d'attention avec un plus grand nombre de têtes permet de générer une information plus riche *(un peu comme empiler des couches de convolution est plus intéressant que de faire une seule couche avec plus de features map)*.
 
+## Encodage de position
+
+Il existe de nombreuses façon de réaliser cet encodage de position, et on peut les séparer en deux grandes catégories : fixes ou apprises.
+Dans les deux cas, il s'agit, pour chaque numéro de position $k \in \{1..s\}$, de produire un vecteur de taille $e$, représentatif de la position d'un vecteur dans la séquence.
+
+### Encodage Appris
+
+Dans ce cas, chaque numéro de position est transformé en *one hot vector* (de dimension $s$), qui est passé à un réseau feed forward, de dimension de sortie $e$.
+
+Ainsi, c'est l'apprentissage qui guide la façon dont la position est encodée. C'est ce qui est fait dans les Vision Transformers (*ViT*).
+
+### Encodage fixe
+
+J'imagine qu'il doit en exister de multiples version. Ici, je ne détaillerais que celle qui est utilisée dans *Attention is all you need*.
+
+On veut encoder une position ($k \in \{0..s-1\}) en un vecteur $P(k)$ de dimension $e$. On pourra noter $P(k) = [P_0(k),P_1(k),... P_e(k)]$
+
+On cherche donc à calculer $P_p(k),~pour~p \in \{1..e\}~et~k \in \{1..s\}
+
+L'encodage est donné par 2 équations, en fonction de la parité de $p$:
+
+$$ P_p(k) = sin{\frac{k}{n^{2i/e}} ~~si~ p=2i$$
+$$ P_p(k) = cos{\frac{k}{n^{2i/e}} ~~si~ p=2i+1$$
+
+Dans l'article originel, la valeur de $n$ est fixée à $n=10000$.
+
+Une image, prise [ici](https://machinelearningmastery.com/a-gentle-introduction-to-positional-encoding-in-transformer-models-part-1/), résume ce traitement :
+
+![sinusoidal Positional Encoding](Images/PE3.png)
+
+**Remarque :** Vu que, dans l'article *Attention is all you need*, les auteurs notent que les performances avec cet encodage sont quasiment identiques à celles obtenues avec un encodage appris, je n'y consacrerais pas plus de temps...
+
+## Input embedding
 
 
 
