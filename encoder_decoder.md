@@ -34,8 +34,7 @@ Enfin, un problème de traduction de texte prend en entrée une séquence (Many)
 
 L'architecture Encodeur/Décodeur a été inventée pour traiter les problèmes de type **Many to Many**, appelés aussi **sequence to sequence**.
 
-Pour tout ce qui suit, nous prendrons l'exemple d'une application de traduction, avec comme entrée la phrase "*les chats mangent avec des souris*"
-et en sortie "cats eat mouses".
+Pour tout ce qui suit, nous prendrons l'exemple d'une application de traduction anglais francais, avec comme entrée la phrase "*cats eat mouses*", pour produire en sortie "*les chats mangent avec des souris*".
 
 ## Rôle de l'encodeur
 
@@ -43,7 +42,7 @@ L'encodeur a pour objectif de fournir **une représentation de la séquence comp
 
 Cette représentation peut être un vecteur unique, dans un espace dit **latent**. Dans cet espace latent, notre phrase est représentée par un point unique, signifiant que les chats mangent des souris...
 
-Il arrive également que cette représentation soit une séquence de vecteurs.
+Il arrive également que ce Context Vector soit une séquence de vecteurs.
 Dans ce cas, chaque mot de la phrase d'entrée (chaque token, en fait), va être travaillé par l'encodeur en fonction du contexte de la phrase complète pour représenter un concept plus précis. Par exemple, les souris évoquées par cette phrases sont a priori des mammifères et non pas du matériel informatique.
 
 ## Rôle du décodeur
