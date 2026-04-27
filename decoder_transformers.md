@@ -34,9 +34,3 @@ Ce sont ces outputs précédents, encodés, qui vont entrer dans la couche d'att
 Dans le décodeur, ces couches d'attention sont répétées $N$ fois, en série.
 
 Enfin, pour la prédiction finale du prochain token, on utilise un réseau feedforward qui possède $d_{dict}$ sorties, avec $d_{dict}$, le nombre de token possible dans le dictionnaire de langue francaise.
-
-
-
-
-
--
