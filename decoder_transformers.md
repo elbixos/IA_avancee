@@ -22,14 +22,14 @@ Plus précisément, au stade qui nous intéresse, à partir du début de traduct
 
 Commencons par la partie basse de la figure précédente :
 
-1. Comme dans l'encodeur, la séquence "les chats mangent" est encodée par un réseau dense, appris, de longueur $s \times e$. *J'imagine que la séquence subit un padding pour lui donner une longueur $s$*
+1. Comme dans l'encodeur, la séquence "les chats mangent" est encodée par un réseau dense, appris, de longueur $s \times e$. *J'imagine que la séquence subit un padding pour lui donner une longueur* $s$
 2. Cet encodage est aussi complété par un encodage de position, ajouté à l'embedding.
 
 Ce sont ces outputs précédents, encodés, qui vont entrer dans la couche d'attention du décodeur que nous décrivons maintenant :
 
 1. Cet embedding est enrichi par un bloc d'auto-attention multi tête pour que chaque mot de la séquence "les chats mangent" soit enrichi par le contexte des autres mots de cette séquence.
-2. Cette version enrichie est encore enrichie par un autre bloc d'attention, cette fois-ci croisée. l'attention est portée à la séquence complète venue de l'encodeur, c'est le context Vector correspondant à la séquence "cats eats mouses". On peut donc imaginer notre séquence comme "les chats mangent", ou chaque mot est enrichi par le contexte de la séquence et par le contexte global "cats eats mouses".
-3. Chaque vecteur de cette séquence est également enrichi par l'ajout d'une sortie de réseau feed-forward (*dont l'intérêt ne me saute pas aux yeux*)
+2. Cette version enrichie est encore enrichie par un autre bloc d'attention, cette fois-ci croisée. L'attention est ici portée à la séquence complète venue de l'encodeur : le Context Vector correspondant à la séquence "cats eats mouses". On peut donc imaginer notre séquence en sortie de cet étage comme "les chats mangent", ou chaque mot est enrichi par le contexte de la séquence et par le contexte global "cats eats mouses".
+3. Chaque vecteur de cette séquence est également enrichi par l'ajout d'une sortie de réseau feed-forward (*dont l'intérêt ne me saute toujours pas aux yeux*)
 
 Dans le décodeur, ces couches d'attention sont répétées $N$ fois, en série.
 
