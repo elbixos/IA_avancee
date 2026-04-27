@@ -97,9 +97,9 @@ Prenons deux exemples pour fixer nos idées.
 
 Soit une phrase quelconque, comme *"le chat mange la souris"*, que l'on voudrait injecter dans l'encodeur. Cette phrase est préalablement découpée en tokens, qui correspondent plus ou moins à des mots du dictionnaire (voir [la section dédiée aux tokens](tokens.md) pour plus de précisions)
 
-Chaque token à de fait un indice dans le dictionnaire de tokens. Cet indice est transformé en *one hot vector* dans un espace de dimension $d_{dict}$. $d_{dict}$ est la taille de notre dictionnaire de tokens. Par exemple, le dictionnaire de token de GPT3 est de taille 50257.
+Chaque token à de fait un indice dans le dictionnaire de tokens. Cet indice est transformé en *one hot vector* dans un espace de dimension $d_{dict}$. $d_{dict}$ est la taille de notre dictionnaire de tokens. Par exemple, le dictionnaire de token de GPT3 est de taille $d_{dict} = 50257$.
 
-Chaque vecteur est alors de taille 50257, qu'il faut transformer en un vecteur de taille $e$. La solution classique consiste à utiliser un réseau Feedforward dense, à $d_{dict}$ entrées et $e$ sorties. Les poids de ce réseau seront fixés pendant l'apprentissage.
+Chaque vecteur est alors de taille $d_{dict}$, qu'il faut transformer en un vecteur de taille $e$. La solution classique consiste à utiliser un réseau Feedforward dense, à $d_{dict}$ entrées et $e$ sorties. Les poids de ce réseau seront fixés pendant l'apprentissage.
 
 Il faut noter que c'est cette partie qui va s'assurer que deux mots de sens proches seront encodés par des vecteurs proches.
 
