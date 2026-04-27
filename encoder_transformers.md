@@ -20,7 +20,7 @@ L'encodeur met également en place un certain nombre de mécanismes importants, 
 
 La figure ci-dessous, extraite de l'article *Attention is all you need* présente cette architecture
 
-![architecture de l'encodeur des Transformers](encoder_transformers.png)
+![architecture de l'encodeur des Transformers](Images/encoder_transformers.png)
 
 
 

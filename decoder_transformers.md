@@ -10,4 +10,5 @@ MathJax = {
 
 # Le décodeur des Transformeurs
 
-![architecture du décodeur des Transformers](decoder_transformers.png)
+![architecture du décodeur des Transformers](Images/decoder_transformers.png)
+

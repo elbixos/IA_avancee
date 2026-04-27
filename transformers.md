@@ -10,4 +10,4 @@ MathJax = {
 
 # Les Transformeurs
 
-![architecture complete des Transformers](transformer_complet.png)
+![architecture complete des Transformers](Images/transformer_complet.png)
