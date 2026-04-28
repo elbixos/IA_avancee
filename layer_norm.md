@@ -21,11 +21,11 @@ Soit un vecteur $x$, correspondant **à un item du patch**, en entrée de la cou
 
 Celui-ci subit la transformation $x~ \rightarrow ~ x'~ \rightarrow ~ x"$ qui suit :
 
-$$x' = (x - m)/s  ~~~ (normalisation)$$
+$$x' = (x - m)/\sigma  ~~~ (normalisation)$$
 
 $$x" = \gamma x' + \beta$$
 
-- $m$ et $s$ sont respectivement la moyenne et l'écart-type des features de l'item.
+- $m$ et $\sigma$ sont respectivement la moyenne et l'écart-type des features de l'item.
 - $\beta$ et $\gamma$ sont respectivement la moyenne et l'écart-type de cet item, en sortie de la couche, choisis par le réseau pendant l'apprentissage.
 
 ## Cas des réseaux denses.
@@ -113,5 +113,16 @@ Pour voir comment cela se passe dans des données séquentielles, on va commence
 
 ![données d'un patch dans un LM](Images/data_item_sequence.png)
 
+Ici encore, c'est le long de l'embedding qu'opère la layer norm, en normalisant la moyenne et la variance de chaque mot d'une séquence. Il semble logique de ne pas modifier la "direction générale" du vecteur de l'item, qui porte son sens.
+(de fait, on lui fait subir une translation de $-\beta$, mais l'idée est là).
+
+1. Le vecteur d'un item de la séquence est affecté globalement.
+2. chaque item d'une séquence est normalisé différement (chacun à son $\beta$ et $\gamma$)
+3. Au sein d'un batch, tous les items de subissent le même scaling.
+
+Ainsi, sauf erreur de ma part (*je suis plutôt confiant*), si notre séquence est de taille $s$, la couche doit apprend $2 \times s$ paramètres, peu importe la taille du batch et de l'embedding.
+
+Dans les RNN, le fait d'avoir un $\beta$ et un $gamma$ par item de la séquence était plus ou moins nécessaire (du fait des méthodes de backprop dans les RNN).
+Dans un transformer, cela ne se justifie pas forcément, mais semble raisonnable.
 
 
