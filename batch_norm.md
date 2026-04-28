@@ -45,6 +45,7 @@ Reprenons tout ceci rapidement
 Soit un paramètre x en entrée de la couche. Celui-ci subit la transformation $x~ \rightarrow ~ x'~ \rightarrow ~ x"$ qui suit :
 
 $$x' = (x - m)/s  ~~~ (normalisation)$$
+
 $$x" = \gamma x' + \beta$$
 
 - $m$ et $s$ sont respectivement la moyenne et l'écart-type du paramètre, estimés sur le batch actuel.
