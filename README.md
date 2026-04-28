@@ -23,4 +23,4 @@ Pour améliorer ce qui précède ou enrichir...
 
 - [layer norm in transformers](https://www.newline.co/@zaoyang/annotated-transformer-layernorm-explained--a0e93a57) (Pré LN, Post LN)
 
-- greedy search / beam search
+- [greedy search / beam search](https://www.width.ai/post/what-is-beam-search)
