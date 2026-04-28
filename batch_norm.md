@@ -118,7 +118,7 @@ Ainsi, la figure suivante présente, en vert, une feature map quelconque de la p
 
 La figure qui suit présente, en violet, l'ensemble des données impliquées dans la normalisation d'une feature map donnée sur tout le batch. Pour chacune des tranches parallèles à celle présentée :
 
-- le réseau mesure un couple de moyenne, variance $(m,\sigma) spécifique à cette tranche.
+- le réseau mesure un couple de moyenne, variance $(m,\sigma)$ spécifique à cette tranche.
 - le réseau apprend un couple $(\gamma,\beta)$ spécifique à cette tranche.
 
 ![normalisation par batch CNN](Images/batch_norm_CNN.png)
