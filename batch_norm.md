@@ -100,7 +100,7 @@ Les données correspondant à un exemple en entrée sont un tableau 3D, de taill
 
 Plus généralement, les données correspondant à un exemple, à l'intérieur du réseau sont un tableau 3D de taille $H.W.C$ (Height x Width x number of map).
 
-Un batch de M exemples sera donc un tenseur d'ordre 4 de taille $M.H.W.C$ (soit M images, chacune de taille HxW, comprenant C canaux ou maps).
+Un batch de $B$ exemples sera donc un tenseur d'ordre 4 de taille $B.H.W.C$ (soit M images, chacune de taille HxW, comprenant C canaux ou maps).
 
 Cela n'aura aucun sens de normaliser, sur l'ensemble du batch, l'ensemble des pixels correspondant à une position spatiale donnée (cela détruirait toutes les corrélation internes entre pixels d'une image).
 
@@ -110,7 +110,7 @@ De ce fait, dans les réseaux convolutifs, lorsqu'on estime la moyenne et l'éca
 
 Essayons de visualiser un peu le fonctionnement de la normalisation par batch dans des données réelles dans des CNN.
 
-Notre réseau travaille sur des batchs de taille $B$, composés de $C$ features map, de taille $H \times W$. Nos données sont donc des tenseurs d'ordre 4, difficiles à représenter. Dans les figures suivantes, j'ai aggloméré $H$ et $W$ sur une seule dimension. Nos données seront donc représentées par des cubes de données.
+Notre réseau travaille sur des batchs de taille $B$, composés de $C$ features map, chacun de taille $H \times W$. Nos données sont donc des tenseurs d'ordre 4, difficiles à représenter. Dans les figures suivantes, j'ai aggloméré $H$ et $W$ sur une seule dimension. Nos données seront donc représentées par des cubes de données.
 
 Ainsi, la figure suivante présente, en vert, une feature map quelconque de la première image d'un batch.
 
