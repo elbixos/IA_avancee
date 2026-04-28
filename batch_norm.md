@@ -42,7 +42,7 @@ La couche suivante, quelle qu'elle soit, travaillera donc en apprentissage sur u
 
 Reprenons tout ceci rapidement
 
-Soit un paramètre x en entrée de la couche. Celui-ci subit la transformation $x~->~x'~->~x"$ qui suit :
+Soit un paramètre x en entrée de la couche. Celui-ci subit la transformation $x~\rightarrow~x'~\rightarrow~x"$ qui suit :
 
 $$x' = (x - m)/s  ~~~ (normalisation)$$
 $$x" = \gamma x' + \beta$$
