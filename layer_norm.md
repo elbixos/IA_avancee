@@ -125,4 +125,27 @@ Ainsi, sauf erreur de ma part (*je suis plutôt confiant*), si notre séquence e
 Dans les RNN, le fait d'avoir un $\beta$ et un $\gamma$ par item de la séquence était plus ou moins nécessaire (du fait des méthodes de backprop dans les RNN).
 Dans un transformer, cela ne se justifie pas forcément, mais semble raisonnable.
 
+## Fun stuff that I've found by testing things
+
+En fixant $\beta = 0$ et $\gamma = 1$ (sans rescaling), le comportement des données lors de la batch norm est simple : elle recentre
+le nuage de points autour de l'origine et lui donne un écart type de 1 dans chaque dimension, en conservant sa forme.
+
+En revanche, voici que l'on observe quand on plot les données
+avant et après layer Normalisation si l'embedding est de dimension 3 :
+
+![layer norm projection](Images/plot_layer_norm_projection.png)
+
+Dans cette figure, on observe :
+
+- un nuage de 100 points (en bleu)
+- l'origine (en rouge)
+- le nuage après layer norm (en vert)
+
+Comme on peut le voir, le nuage après layer norm semble plat (un hyperplan
+de l'espace d'origine) et les points sont distribués sur un "cercle".
+
+De fait, [cette publi](https://arxiv.org/pdf/2405.04134) détaille le phénomène
+bien plus précisément (et le démontre). Les données en sortie d'une layer norm sont à l'intersection d'un hyperplan et de la surface d'un hyper ellipsoide...
+
+*A quoi ca va me servir, je ne sais pas...*
 
