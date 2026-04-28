@@ -61,11 +61,13 @@ En revanche, si les couches d'auto-attention des modules d'attention ont accès 
 
 C'est pourquoi les couches d'auto-attention dans le décodeurs utilisent une **attention masquée**, telle que décrite dans [cette partie](mecanisme_attention.md). Pour rappel, cela consiste à fixer à $-\infty$ les coefficients de la matrice de pattern d'attention avant d'en prendre le softmax. Ainsi, un mot de la séquence ne peut être enrichi que par les outputs qui le précèdent dans la phrase.
 
+Cela signifie aussi que **chaque token enrichi en entrée du DNN doit porter toute l'information pertinente qui le précède** puisque le DNN ne se fonde que sur ce token enrichi pour prédire le mot correspondant. 
+
 *Cela m'a pris un certain temps pour comprendre cette partie...*
 
 ### Fonctionnement en inférence
 
-Si le système doit traduire une phrase quelconque, comme "Not all those who wander are lost", on ne dispose pas d'une séquence de sortie initialement.
+Si le système doit traduire une phrase quelconque, comme "*Not all those who wander are lost*", on ne dispose pas d'une séquence de sortie initialement.
 
 Dans ce cas, le fonctionnement est le suivant :
 
@@ -74,6 +76,8 @@ Dans ce cas, le fonctionnement est le suivant :
 on commence par lui injecter une séquence vide, avec seulement *`<start>`* complètement à droite.
 3. on n'observe que le dernier mot prédit par le réseau. Il correspond à la dernière case de la séquence en sortie du DNN ("tous")
 4. on recommence en inserant en bas du décodeur une séquence vide avec *`<start>`,Tous*. qui prédit le prochain mot. On réitère ensuite depuis 3. jusqu'à obtention d'un token *`<end>`* en sortie du DNN.
+
+Ici encore, cela signifie qu'en inférence, le dernier token enrichi en entrée du DNN doit porter **toute l'information pertinente de la phrase à traduire et du début de traduction produite** puisque le DNN ne se fonde que sur ce token enrichi pour prédire le prochain mot. Cela implique que les mécanismes d'attention sont suffisament complexes pour permettre cela.
 
 *Idéalement, notre Transformer génèrera la séquence suivante* :**Tous ceux qui errent ne sont pas perdus**
 
