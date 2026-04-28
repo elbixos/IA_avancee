@@ -45,9 +45,9 @@ Dans chacune de ces couches, on trouve :
 
 - un bloc d'auto-attention multi-tête.
 - l'attention calculée par ce bloc est ajoutée au tenseur représentant la séquence. Chaque vecteur de la séquence est donc enrichi par le contexte donné par les autres vecteurs de la séquence.
-- La séquence est normalisée (**pas encore très clair**)
+- La séquence est normalisée (voir la section [Layer Normalisation](layer_norm.md))
 - On traverse alors un réseau de neurone feedforward qui traite chaque vecteur de la séquence indépendamment et de la même façon. Ce réseau est composé, dans le papier originel, d'une couche cachée de $d_{ff} = 4 \times e = 2048$ neurones et d'une couche de sortie de dimension $e$. Ces deux couches utilisent une fonction d'activation ReLU. Ce réseau interne modifie l'information associée à chaque vecteur. *Je ne sais pas trop à quoi cela sert, si ce n'est que ces réseaux apprennent, cela doit donc donner de la latitude à l'encodeur pour choisir la représentation de chaque séquence*.
-- Cette sortie du réseau feed-forward est ajoutée à la séquence et le tout encore une fois normalisé (**toujours pas clair**)
+- Cette sortie du réseau feed-forward est ajoutée à la séquence et le tout encore une fois normalisé comme présenté au dessus.
 
 Ainsi, la séquence en sortie d'une couche d'attention a forcément **la même taille** que la séquence en entrée.
 
