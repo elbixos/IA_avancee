@@ -49,7 +49,7 @@ $$x" = \gamma x' + \beta$$
 
 $m$ et $s$ sont respectivement la moyenne et l'écart-type du paramètre, estimés sur le batch actuel.
 
-$\gamma$ et $\beta$ sont respectivement la moyenne et l'écart-type de ce paramètre, en sortie de la couche, choisis par le réseau pendant l'apprentissage.
+$\beta$ et $\gamma$ sont respectivement la moyenne et l'écart-type de ce paramètre, en sortie de la couche, choisis par le réseau pendant l'apprentissage.
 
 ## Cas des réseaux denses en validation ou en prédiction
 
