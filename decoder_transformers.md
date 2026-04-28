@@ -24,7 +24,7 @@ Plus précisément, au stade qui nous intéresse, à partir du début de traduct
 
 Commencons par la partie basse de la figure précédente :
 
-1. Comme dans l'encodeur, la séquence "`<start>` les chats mangent" est encodée par un réseau dense, appris, de longueur $s \times e$. *J'imagine que la séquence subit un padding pour lui donner une longueur* $s$
+1. Comme dans l'encodeur, la séquence "`<start>` les chats mangent" est encodée par un réseau dense, appris.
 2. Cet encodage est aussi complété par un encodage de position, ajouté à l'embedding.
 
 Ce sont ces outputs précédents, encodés, qui vont entrer dans la couche d'attention du décodeur que nous décrivons maintenant :
@@ -73,7 +73,7 @@ Dans ce cas, le fonctionnement est le suivant :
 2. le décodeur doit maintenant produire toute la séquence mot à mot. Pour cela,
 on commence par lui injecter une séquence vide, avec seulement *`<start>`* complètement à droite.
 3. on n'observe que le dernier mot prédit par le réseau. Il correspond à la dernière case de la séquence en sortie du DNN ("tous")
-4. on recommence en inserant en bas du décodeur une séquence vide avec *`<start>`,Tous*. qui prédit le prochain mot. On réitère ensuite depuis 3. jusqu'à obtention d'un token *`<start>`* en sortie du DNN.
+4. on recommence en inserant en bas du décodeur une séquence vide avec *`<start>`,Tous*. qui prédit le prochain mot. On réitère ensuite depuis 3. jusqu'à obtention d'un token *`<end>`* en sortie du DNN.
 
 *Idéalement, notre Transformer génèrera la séquence suivante* :**Tous ceux qui errent ne sont pas perdus**
 
