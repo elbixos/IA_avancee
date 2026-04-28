@@ -104,7 +104,7 @@ Un batch de M exemples sera donc un tenseur d'ordre 4 de taille $M.H.W.C$ (soit 
 
 Cela n'aura aucun sens de normaliser, sur l'ensemble du batch, l'ensemble des pixels correspondant à une position spatiale donnée (cela détruirait toutes les corrélation internes entre pixels d'une image).
 
-De ce fait, dans les réseaux convolutifs, lorsqu'on estime la moyenne et l'écart-type du batch, on les estime sur l'ensemble des images, et pour l'ensemble des positions. On mesure donc une moyenne et un écart-type par canal. (Soit deux vecteurs 1D de taille $C$). De même, $\alpha$ et $\beta$, les moyennes et écarts-type en sortie sont appris et appliqués pour chaque canal. C'est également le cas pour la moyenne et l'écart-type variables mémorisés.
+De ce fait, dans les réseaux convolutifs, lorsqu'on estime la moyenne et l'écart-type du batch, on les estime sur l'ensemble des images, et pour l'ensemble des positions. On mesure donc une moyenne et un écart-type par canal. (Soit deux vecteurs 1D de taille $C$). De même, $\gamma$ et $\beta$, les moyennes et écarts-type en sortie sont appris et appliqués pour chaque canal. C'est également le cas pour la moyenne et l'écart-type variables mémorisés.
 
 ### Visualisation pour les CNN
 
@@ -112,10 +112,16 @@ Essayons de visualiser un peu le fonctionnement de la normalisation par batch da
 
 Notre réseau travaille sur des batchs de taille $B$, composés de $C$ features map, de taille $H \times W$. Nos données sont donc des tenseurs d'ordre 4, difficiles à représenter. Dans les figures suivantes, j'ai aggloméré $H$ et $W$ sur une seule dimension. Nos données seront donc représentées par des cubes de données.
 
-Ainsi, la figure suivante présente en vert une feature map quelconque de la première image d'un batch.
+Ainsi, la figure suivante présente, en vert, une feature map quelconque de la première image d'un batch.
 
 ![donnees CNN](Images/feature_map_CNN.png)
 
+La figure qui suit présente, en violet, l'ensemble des données impliquées dans la normalisation d'une feature map donnée sur tout le batch. Pour chacune des tranches parallèles à celle présentée :
+
+- le réseau mesure un couple de moyenne, variance $(m,\sigma) spécifique à cette tranche.
+- le réseau apprend un couple $(\gamma,\beta)$ spécifique à cette tranche.
+
+![normalisation par batch CNN](Images/batch_norm_CNN.png)
 
 ### Nombre de paramètres de ces couches
 
