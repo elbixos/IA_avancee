@@ -41,8 +41,42 @@ Enfin, pour la prédiction finale du prochain token, on utilise un réseau feedf
 
 En fait, j'ai un peu menti dans ce qui précède, pour mieux expliquer le principe sous-jacent. Nous allons ici être plus précis.
 
-Pour cela, observons la figure suivante :
+### Fonctionnement en apprentissage
+
+Pour cela, observons la figure suivante, qui représente ce qu'il se passe
+**en apprentissage**.
 
 ![decodeur all in one](Images/decodeur_all_in_one.png)
+
+- La sortie du classifieur est enrichie par l'encodeur et figure en *vert*.
+- La séquence à prédire est intégralement fournie en entrée du décodeur, (en *noir*)
+- cette séquence traverse l'embedding, et est fournie aux couches d'attention,
+ainsi que la sortie de l'encodeur. La sortie de l'encodeur est ainsi enrichie
+et est illustrée par la séquence en *violet*.
+- cette séquence passe à travers le DNN, qui **pour chaque mot, prédit le mot suivant**. La sortie du DNN est la sortie prédite, en *bleu*.
+
+Ainsi, on voit qu'en apprentissage, on ne fait qu'**une seule prédiction**, de toute la séquence de sortie, ce qui limite énormément le temps de calcul.
+
+En revanche, si les couches d'auto-attention des modules d'attention ont accès à la totalité de la séquence à prédire, elles pourraient se servir du mot à droite de celui qu'elle doivent enrichir. Auquel cas, on leur demanderait de prédire une réponse dont elles ont connaissance !
+
+C'est pourquoi les couches d'auto-attention dans le décodeurs utilisent une **attention masquée**, telle que décrite dans [cette partie](mecanisme_attention.md). Pour rappel, cela consiste à fixer à $-\infty$ les coefficients de la matrice de pattern d'attention avant d'en prendre le softmax. Ainsi, un mot de la séquence ne peut être enrichi que par les outputs qui le précèdent dans la phrase.
+
+*Cela m'a pris un certain temps pour comprendre cette partie...*
+
+### Fonctionnement en inférence
+
+Si le système doit traduire une phrase quelconque, comme "Not all those who wander are lost", on ne dispose pas d'une séquence de sortie initialement.
+
+Dans ce cas, le fonctionnement est le suivant :
+
+1. l'encodeur encode cette phrase complète, qu'il passe au décodeur.
+2. le décodeur doit maintenant produire toute la séquence mot à mot. Pour cela,
+on commence par lui injecter une séquence vide, avec seulement *`<start>`* complètement à droite.
+3. on n'observe que le dernier mot prédit par le réseau. Il correspond à la dernière case de la séquence en sortie du DNN ("tous")
+4. on recommence en inserant en bas du décodeur une séquence vide avec *`<start>`,Tous*. qui prédit le prochain mot. On réitère ensuite depuis 3. jusqu'à obtention d'un token *`<start>`* en sortie du DNN.
+
+*Idéalement, notre Transformer génèrera la séquence suivante* :**Tous ceux qui errent ne sont pas perdus**
+
+Et voilà ! 
 
 
