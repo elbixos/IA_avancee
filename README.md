@@ -12,6 +12,10 @@ Ici, je vais placer des notes sur les techniques d'IA avancées (transformers et
     - [le décodeur des transformers](decoder_transformers.md)
     - [les transformers](transformers.md)
 
+- Normalisations diverses
+    - [batch normalisation](batch_norm.md)
+    - [layer normalisation](layer_norm.md)
+
 ## Remarques glanées ici et là
 
 Pour améliorer ce qui précède ou enrichir...
