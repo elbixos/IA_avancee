@@ -61,14 +61,14 @@ En inférence (phase de validation ou de prédiction), ce sont ces moyennes et �
 
 ## Nombre de paramètres de ces couches
 
-Dans un réseau dense, les $N$ caractéristiques en entrée d'une couche sont un vecteur 1D. Sous forme de batch de $M$ entrées, cela forme un tenseur d'ordre 2, de taille $MxN$.
+Dans un réseau dense, les $N$ caractéristiques en entrée d'une couche sont un vecteur 1D. Sous forme de batch de $M$ entrées, cela forme un tenseur d'ordre 2, de taille $M \times N$.
 
 - La moyenne et l'écart-type sont estimés, pour chaque paramètre, sur les $M$ exemples. Cela forme 2 vecteurs de taille $N$ qui serviront :
     - à normaliser le batch ;
     - à mettre à jour les moyennes et les écart-types variables pour la phase d'inférence. Ces deux paramètres sont mémorisés.
 - Le réseau apprend beta et gamma, qui sont également 2 vecteurs de taille $N$.
 
-On a donc, au final, $4xN$ paramètres, dont $2xN$ appris (au sens de « servent à optimiser la loss du réseau »).
+On a donc, au final, $4 \times N$ paramètres, dont $2 \times N$ appris (au sens de « servent à optimiser la loss du réseau »).
 
 ## Où placer ces couches de normalisation par batch ?
 
@@ -96,7 +96,7 @@ De fait, sur les petits réseaux (et les petites bases) que nous utilisons, cert
 
 Bon, l'avantage c'est que si vous avez compris ce qui précède, cela fonctionne plus ou moins de la même façon pour les réseaux convolutifs à une différence près, que j'illustrerai dans le cas de données en entrée de type image.
 
-Les données correspondant à un exemple en entrée sont un tableau 3D, de taille $hauteur x largeur x nb canaux$ (pensez RGB -> 3 canaux). C'est la feature map en entrée du réseau.
+Les données correspondant à un exemple en entrée sont un tableau 3D, de taille *hauteur x largeur x nb canaux* (pensez RGB -> 3 canaux). C'est l'ensemble des feature maps en entrée du réseau.
 
 Plus généralement, les données correspondant à un exemple, à l'intérieur du réseau sont un tableau 3D de taille $H.W.C$ (Height x Width x number of map).
 
