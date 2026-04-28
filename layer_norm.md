@@ -122,7 +122,7 @@ Ici encore, c'est le long de l'embedding qu'opère la layer norm, en normalisant
 
 Ainsi, sauf erreur de ma part (*je suis plutôt confiant*), si notre séquence est de taille $s$, la couche doit apprend $2 \times s$ paramètres, peu importe la taille du batch et de l'embedding.
 
-Dans les RNN, le fait d'avoir un $\beta$ et un $gamma$ par item de la séquence était plus ou moins nécessaire (du fait des méthodes de backprop dans les RNN).
+Dans les RNN, le fait d'avoir un $\beta$ et un $\gamma$ par item de la séquence était plus ou moins nécessaire (du fait des méthodes de backprop dans les RNN).
 Dans un transformer, cela ne se justifie pas forcément, mais semble raisonnable.
 
 
