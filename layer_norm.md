@@ -7,13 +7,26 @@ MathJax = {
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
 
-# batch normalisation
+# Layer normalisation
 
-Je vais essayer de vous expliquer tout ça, sans trop vous abreuver de mathématiques, en commençant par l'intuition initiale de ses inventeurs. Pour le lecteur qui souhaiterait plus de rigueur, la normalisation des batch a été décrite pour la première fois dans l'article de Ioffe, S., & Szegedy, C. (2015).
+Pour bien comprendre ce qui suit, je recommande de lire la section sur la [batch normalisation](batch_norm.md) avant d'attaquer ceci.
 
-Pour vous expliquer tout ceci, je vais commencer par prendre un réseau dense, et regarder ce qui peut se produire pendant l'apprentissage, avant de voir pourquoi la dite « normalisation par batch » peut nous aider.
+Pour le lecteur qui souhaiterait plus de rigueur, la normalisation par couches a été décrite pour la première fois dans l'article de Ba et al., 2016
 
-## Cas des réseaux denses en apprentissage
+L'idée est, comme dans le cas de la *batch normalisation*, de reconfigurer les distributions de features autour d'une moyenne et d'une variance apprises par le réseau pendant l'apprentissage.
+
+Les formules de base qui vont nous servir ici sont exactement les mêmes que dans le cas de la batch normalisation :
+
+Soit un paramètre x en entrée de la couche. Celui-ci subit la transformation $x~ \rightarrow ~ x'~ \rightarrow ~ x"$ qui suit :
+
+$$x' = (x - m)/s  ~~~ (normalisation)$$
+
+$$x" = \gamma x' + \beta$$
+
+
+
+
+## Cas des réseaux denses.
 
 Quelques points préalables :
 
@@ -50,17 +63,6 @@ $$x" = \gamma x' + \beta$$
 
 - $m$ et $s$ sont respectivement la moyenne et l'écart-type du paramètre, estimés sur le batch actuel.
 - $\beta$ et $\gamma$ sont respectivement la moyenne et l'écart-type de ce paramètre, en sortie de la couche, choisis par le réseau pendant l'apprentissage.
-
-La figure suivante présente une illustration du mécanisme de batch normalisation dans un réseau dense.
-
-Dans cette figure, l'avant dernier feature est représenté en vert, pour tous les items du batch.
-
-![batch norm dense](Images/batch_norm_dense.png)
-
-Pour chacune des tranches parallèles à celle présentée :
-
-- le réseau mesure un couple de moyenne, variance $(m,\sigma)$ spécifique à cette tranche.
-- le réseau apprend un couple $(\gamma,\beta)$ spécifique à cette tranche.
 
 ## Cas des réseaux denses en validation ou en prédiction
 
