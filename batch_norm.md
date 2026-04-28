@@ -106,13 +106,24 @@ Cela n'aura aucun sens de normaliser, sur l'ensemble du batch, l'ensemble des pi
 
 De ce fait, dans les réseaux convolutifs, lorsqu'on estime la moyenne et l'écart-type du batch, on les estime sur l'ensemble des images, et pour l'ensemble des positions. On mesure donc une moyenne et un écart-type par canal. (Soit deux vecteurs 1D de taille $C$). De même, $\alpha$ et $\beta$, les moyennes et écarts-type en sortie sont appris et appliqués pour chaque canal. C'est également le cas pour la moyenne et l'écart-type variables mémorisés.
 
-## Nombre de paramètres de ces couches
+### Visualisation pour les CNN
+
+Essayons de visualiser un peu le fonctionnement de la normalisation par batch dans des données réelles dans des CNN.
+
+Notre réseau travaille sur des batchs de taille $B$, composés de $C$ features map, de taille $H \times W$. Nos données sont donc des tenseurs d'ordre 4, difficiles à représenter. Dans les figures suivantes, j'ai aggloméré $H$ et $W$ sur une seule dimension. Nos données seront donc représentées par des cubes de données.
+
+Ainsi, la figure suivante présente en vert une feature map quelconque de la première image d'un batch.
+
+![donnees CNN](Images/feature_map_CNN.png)
+
+
+### Nombre de paramètres de ces couches
 
 Juste pour poser les choses : imaginez une couche de normalisation par batch qui travaille sur des batchs de taille 32, et 128 maps de taille 512 x 1024. Quelle est le nombre de paramètres de cette couche ?
 
 Chaque paramètre est de taille 128 (une moyenne variable par map, un écart type variable par map, un $\beta$ par map et un $\gamma$ par map), soit $4x$ le nombre de map en entrée de la couche. Ici encore, seuls $\beta$ et $\gamma$ sont appris (modifiés pour optimiser la loss). Les deux autres sont juste mémorisés au cours de l'apprentissage.
 
-## Où placer ces couches de normalisation par batch ?
+### Où placer ces couches de normalisation par batch ?
 
 Ici encore, ce sont les résultats expérimentaux qui priment. Actuellement, on trouve souvent ces couches APRÈS une couche de convolution (et sa fonction d'activation) et AVANT une couche de pooling.
 
