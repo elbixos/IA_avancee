@@ -46,18 +46,26 @@ Dans chacune de ces couches, on trouve :
 - un bloc d'auto-attention multi-tête.
 - l'attention calculée par ce bloc est ajoutée au tenseur représentant la séquence. Chaque vecteur de la séquence est donc enrichi par le contexte donné par les autres vecteurs de la séquence.
 - La séquence est normalisée (voir la section [Layer Normalisation](layer_norm.md))
-- On traverse alors un réseau de neurone feedforward qui traite chaque vecteur de la séquence indépendamment et de la même façon. Ce réseau est composé, dans le papier originel, d'une couche cachée de $d_{ff} = 4 \times e = 2048$ neurones et d'une couche de sortie de dimension $e$. Ces deux couches utilisent une fonction d'activation ReLU. Ce réseau interne modifie l'information associée à chaque vecteur. *Je ne sais pas trop à quoi cela sert, si ce n'est que ces réseaux apprennent, cela doit donc donner de la latitude à l'encodeur pour choisir la représentation de chaque séquence*.
+- On traverse alors un réseau de neurone feedforward qui traite chaque vecteur de la séquence indépendamment et de la même façon. Ce réseau est composé, dans le papier originel, d'une couche cachée de $d_{ff} = 4 \times e = 2048$ neurones et d'une couche de sortie de dimension $e$. Ces deux couches utilisent une fonction d'activation ReLU. Ce réseau interne modifie l'information associée à chaque vecteur en la **projetant dans un nouvel espace**, plus propice à l'opération générale réalisée par le réseau.
 - Cette sortie du réseau feed-forward est ajoutée à la séquence et le tout encore une fois normalisé comme présenté au dessus.
 
 Ainsi, la séquence en sortie d'une couche d'attention a forcément **la même taille** que la séquence en entrée.
 
 Un certain nombre de couches d'attention sont ainsi enchainées, pour produire en sortie de l'encodeur des séquences de dimensions $s \times e$.
 
-Il est vraisemblable qu'empiler des couches d'attention plutôt que de faire des têtes d'attention avec un plus grand nombre de têtes permet de générer une information plus riche *(un peu comme empiler des couches de convolution est plus intéressant que de faire une seule couche avec plus de features map)*.
+## remarques sur les couches d'attentions
+
+La premiere remarque importante est qu'il est en fait nécessaire d'**empiler des couches d'attention**. Cela permet plusieurs choses :
+
+1. De bien propager l'attention calculée dans toute la séquence. Pensez par exemple à la phrase *"La souris grise est sur le bureau. Elle est racordée à l'ordinateur"*. Une couche d'attention multi-tête va peut être se donner de la couleur à la souris, et associer le mot "elle" à la souris et à un ordinateur. Elle ne pourra pas, en revanche, enrichir le mot "elle" avec le sens d'une "souris grise", ni enrichir la souris avec le contexte d'ordinateur associé à "elle". Il faut pour cela 2 étages ou plus d'attention.
+2. Cela permet de calculer des attentions sur les résultats des attentions précédentes. Par exemple, un premier étage d'attention pourrait s'interesser à l'emplacement géographique des différents acteurs d'une séquence (certains sont à Paris, d'autres à Munich). Le second étage pourrait alors s'interesser à définir quels acteurs sont au même endroit.
+
+La seconde remarque, non moins importante, concerne la présence du DNN au sein du bloc d'attention. On l'a dit, il projette chaque vecteur dans un nouvel espace, plus propice à la réalisation de la tâche générale du réseau.
+ **Cela implique aussi que l'on ne peut plus interpréter les vecteurs en sortie des couches d'attention dans l'espace initial d'embedding**.
 
 ## Encodage de position
 
-Il existe de nombreuses façon de réaliser cet encodage de position, et on peut les séparer en deux grandes catégories : fixes ou apprises.
+Cet encodage de position est réalisé en entrée de l'encodeur. Il existe de nombreuses façons de le réaliser, et on peut les séparer en deux grandes catégories : fixes ou apprises.
 Dans les deux cas, il s'agit, pour chaque numéro de position $k \in \{1..s\}$, de produire un vecteur de taille $e$, représentatif de la position d'un vecteur dans la séquence.
 
 ### Encodage Appris
@@ -112,13 +120,3 @@ Traitons rapidement un exemple fictif d'images. Un token dans un image peut êtr
 Ici, encore, il faudra transformer ce token en un vecteur de dimension $e$, et la solution consistera en un simple réseau feed-forward de dimensions adaptées.
 
 En ce qui concerne la longueur de la séquence, les réseaux utilisant des transformers pour la vision sont souvent construits pour des images de taille fixe, ce qui règle le problème de séquences de taille variable.
-
-
-
-
-
-
-
-
-
-
