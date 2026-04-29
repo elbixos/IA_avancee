@@ -284,11 +284,25 @@ Dans la pratique, dans la matrice $A = Q \times K$, on remplace tous les éléme
 
 ![Attention causale](Images/matrice_attention_masquee.png)
 
+## Portée de l'attention
+
+C'est sans doute le point primordial qui fait le succès de ces techniques :
+le mécanisme d'attention permet d'enrichir un vecteur par le contexte apporté
+par d'autres vecteurs, **quelle que soit la position de ces autres vecteurs dans la séquence**.
+
+Les techniques préalables de traitement de séquence (essentiellement des RNN) avaient toutes un problème de portée d'influence. Il était difficile de modifier un vecteur en prenant en compte le contexte apporté par les vecteurs les plus lointains (avant ou après). Ces techniques avaient *des problèmes de mémoire* ! Certaines solutions comme les *LSTM* (pour *Long Short Term Memory*) ou les *GRU* tentaient de remédier à cela, mais jamais aussi efficacement que les mécanismes d'attention.
+
+Ceux ci ont été alors implémentés dans des RNN, avant de céder la place aux transformers.
+
+
 ## Résumé 
+
+Le mécanisme d'attention permet d'**enrichir chaque vecteur de la séquence par le contexte qu'apportent les autres vecteurs de la séquence**. Chaque tête d'attention porte sur un type de contexte spécifique (comme "influence des adjectif" ou "signification des pronoms"). Si l'on place plusieurs têtes
+en parallèle, on pourra enrichir la séquence par de nombreux types de contextes. 
 
 Voici donc comment est constitué un bloc d'attention :
 
-$h$ têtes d'attentions mises en parallèle, chacune cherchant à enrichir une séquence d'entrée $X$ en fonction du contexte. Chaque tête porte attention à des choses différentes. Ce contexte peut être :
+$h$ têtes d'attentions mises en parallèle, chacune cherchant à enrichir une séquence d'entrée $X$ en fonction du contexte. Chaque tête porte attention à des choses différentes (le type de contexte). Ce contexte peut être :
 
 - les autres vecteurs de $X$ dans le cas de l'**auto attention** (ou *self attention*).
 - les vecteurs d'une autre séquence $X'$ dans le cas de l'**attention croisee** (ou *crossed attention*).

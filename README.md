@@ -4,14 +4,18 @@ Ici, je vais placer des notes sur les techniques d'IA avancées (transformers et
 
 ## Le coeur technique
 
-- [architecture encodeur/décodeur](encoder_decoder.md)
+- [l'architecture encodeur/décodeur](encoder_decoder.md)
+- [les mécanismes d'attention](mecanisme_attention.md)
 
-- [mécanismes d'attention](mecanisme_attention.md)
 - Les Transformers :
     - [l'encodeur des transformers](encoder_transformers.md)
     - [le décodeur des transformers](decoder_transformers.md)
     - [les transformers](transformers.md)
     - les [Vision Transformers (ViT)](vit.md)  *en cours de rédaction*
+
+- [La Tokenization](tokenisation.md) pour l'embedding du langage naturel.
+
+- quelques grands modeles utilisant des transformers
 
 - Normalisations diverses
     - [batch normalisation](batch_norm.md)
@@ -21,6 +25,6 @@ Ici, je vais placer des notes sur les techniques d'IA avancées (transformers et
 
 Pour améliorer ce qui précède ou enrichir...
 
-- [layer norm in transformers](https://www.newline.co/@zaoyang/annotated-transformer-layernorm-explained--a0e93a57) (Pré LN, Post LN)
+- [layer norm in transformers](https://www.newline.co/@zaoyang/annotated-transformer-layernorm-explained--a0e93a57) **(Pré LN, Post LN)**
 
 - [greedy search / beam search](https://www.width.ai/post/what-is-beam-search)
