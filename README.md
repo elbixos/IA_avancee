@@ -13,7 +13,7 @@ Ici, je vais placer des notes sur les techniques d'IA avancées (transformers et
     - [les transformers](transformers.md)
     - les [Vision Transformers (ViT)](vit.md)  *en cours de rédaction*
 
-- [La Tokenization](tokenisation.md) pour l'embedding du langage naturel.
+- [La Tokenization](tokenization.md) pour l'embedding du langage naturel.
 
 - quelques grands modeles utilisant des transformers
 
