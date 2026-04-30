@@ -44,6 +44,8 @@ Cela se fait au sein d'un pipeline de tokenization :
 3. Tokenization
 4. Post Processing
 
+Voyons un peu plus en détail tout ceci :
+
 1. la normalisation, selon ce que j'en ai lu, consiste à supprimer les accents, mettre tout en minuscules, supprimer les espaces inutiles, pour simplifier le texte à encoder. *Dans la pratique de mes tests, le seul effet que j'ai pu observer est la transformation de "\n" et "\t" en espaces...*
 2. la pré-tokenisation consiste à séparer le texte en mots, autour des espaces et de la ponctuation.
 3. Le tokenizer : La liste des mot est alors passée au tokenizer, un algorithme pré-entrainé, qui va découper chaque mot en différents token.
