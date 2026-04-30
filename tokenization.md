@@ -160,8 +160,11 @@ Notre encodage du corpus devient donc :
 |e|a|u|
 ```
 
-On va réitérer cette opération de recherche de paire dans le nouveau corpus encodé. Ici, les deux paires les plus présentes sont "ch|a" qui se produit 3 fois, et 'a|u' qui se produit 2 fois. A noter que 'e|a' se produit également 2 fois, mais comme on distingue les debuts de mots et les autres, on a en fait une
-paire 'e|a' en début de mot et une paire 'e|a' en milieu ou fin.
+On va réitérer cette opération de recherche de paire dans le nouveau corpus encodé. Ici, les deux paires les plus présentes sont `ch|a` qui se produit 3 fois, et `a|u` qui se produit 2 fois. A noter que e|a' se produit également 2 fois, mais comme on distingue les debuts de mots et les autres, on a en fait une
+On va réitérer cette opération de recherche de paire dans le nouveau corpus encodé. Ici, les deux paires les plus présentes sont `ch|a` qui se produit 3 fois, et `a|u` qui se produit 2 fois. A noter que e|a' se produit également 2 fois, mais comme on distingue les debuts de mots et les autres, on a en fait une
+On va réitérer cette opération de recherche de paire dans le nouveau corpus encodé. Ici, les deux paires les plus présentes sont `ch|a` qui se produit 3 fois, et `a|u` qui se produit 2 fois. A noter que e|a' se produit également 2 fois, mais comme on distingue les debuts de mots et les autres, on a en fait une
+On va réitérer cette opération de recherche de paire dans le nouveau corpus encodé. Ici, les deux paires les plus présentes sont `ch|a` qui se produit 3 fois, et `a|u` qui se produit 2 fois. A noter que `e|a` se produit également 2 fois, mais comme on distingue les debuts de mots et les autres, on a en fait une
+paire `e|a` en début de mot et une paire `e|a` en milieu ou fin.
 
 Après ajout de ces paires, notre dictionnaire devient 
 
