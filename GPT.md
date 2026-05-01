@@ -73,8 +73,10 @@ A cette séquence, on peut ajouter nos données :
 ```
 ce film est nul
 ```
+C'est la concaténation de ces deux séquences qui est introduite en entrée du réseau, décalée complètement à droite (on comble avec des zéros).
 
-Ainsi, on ne demande au réseau que de produire un token, l'identifiant émotionnel associé au commentaire.
+Le réseau produit toute une séquence en sortie, mais **la seule partie qui nous intéresse est le tout dernier token**, le plus à droite en sortie.
+Pour notre tâche, ce sera l'identifiant émotionnel associé au commentaire.
 
 #### Deuxième exemple : chat bot
 
