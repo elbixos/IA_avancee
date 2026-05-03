@@ -78,7 +78,7 @@ Ainsi, c'est l'apprentissage qui guide la façon dont la position est encodée. 
 
 J'imagine qu'il doit en exister de multiples version. Ici, je ne détaillerais que celle qui est utilisée dans *Attention is all you need*.
 
-On veut encoder une position ($k \in \{0..s-1\}) en un vecteur $P(k)$ de dimension $e$. On pourra noter $P(k) = [P_0(k),P_1(k),... P_e(k)]$
+On veut encoder une position ($k \in \{0..s-1\}$) en un vecteur $P(k)$ de dimension $e$. On pourra noter $P(k) = [P_0(k),P_1(k),... P_e(k)]$
 
 On cherche donc à calculer $P_p(k),~pour~p \in \{1..e\}~et~k \in \{1..s\}
 
