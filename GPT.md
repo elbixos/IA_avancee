@@ -14,7 +14,7 @@ MathJax = {
 **GPT** signifie **Generative Pretrained Transformer**. C'est un LLM (Large Langage Model), un modèle de grande taille dédié au traitement du langage.
 Il existe en de nombreuses versions, de 1 à 5 à ce jour. La version 1 a vu le jour en 2018.
 
-Ici, nous parlerons surtout du plus célèbre, GPT3 (ouvert aux utilisateurs en 2020), qui est la base de chatGPT. **Le code source de GPT3, contrairement aux précédents modèles, n'est pas ouvert**. Néanmoins, on dispose d'articles présentant son architecture.
+Ici, nous parlerons surtout du plus célèbre, GPT3 (ouvert aux utilisateurs en 2020), qui est la base de chatGPT. **Le code source de GPT3, contrairement aux précédents modèles, n'est pas ouvert**. Néanmoins, on dispose d'articles présentant son architecture, notamment [celui-ci](https://arxiv.org/abs/2005.14165)
 
 Un point de GPT, qui le distingue de la concurrence, est qu'il est entrainé sur une seule tâche (prédire le mot suivant d'une séquence) mais qu'il peut être utilisé pour des **tâches en aval** (*downstream task*) **sans entrainement supplémentaire**.
 
