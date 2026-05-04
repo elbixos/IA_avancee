@@ -57,13 +57,13 @@ ce qui donne une taille de séquence plus grande.
 ### chiffres liés aux données traitées
 
 - La taille des patchs retenue est, la plupart du temps, $16 \times 16$ pixels ($P=16$).
-- la taille des images en entrée est fixée, les images sont éventuellement scaled en images de taille $i_s \times i_s$ . Plusieurs tests ont été effectués, avec $i_s \in\[64,512\]$. Un cas classique est $i_s = 224$
+- la taille des images en entrée est fixée, les images sont éventuellement scaled en images de taille $i_s \times i_s$ . Plusieurs tests ont été effectués, avec $i_s \in\[64,512\]$, avec $i_s$ divisible par $P^2$. Un cas classique est $i_s = 224$
 
-Avec ce types de données, une image est un tenseur de dimension $H,W,C$.
-Pour l'extractions des patchs, on le redimensionne en $N = H/P \times W/P$ patchs de dimension $P \times P times C$. (**bizarre que 224 ne soit pas divisible par 16)
+Avec ce type de données, une image est un tenseur de dimension $H,W,C$.
+Pour l'extraction des patchs, on le redimensionne en $N = H/P \times W/P$ patchs de dimension $P \times P \times C$.
 
 Une image est donc une séquence de $s = N = 228 / 16 \times 228 / 16 = 196$.
-Chaque patch est initialement un vecteur de dimension $16 \times 16 times 3 = 768$, projeté par l'embedding dans un espace de dimension $e = 768$ aussi pour *ViT Base*. Il y aurait peut de sens à prendre un embedding de dimensions plus restreintes que les dimensions initiales. (*quoique... face à des contraintes mémoire...*)
+Chaque patch est initialement un vecteur de dimension $16 \times 16 \times 3 = 768$, projeté par l'embedding dans un espace de dimension $e = 768$ aussi pour *ViT Base*. Il y aurait peut de sens à prendre un embedding de dimensions plus restreintes que les dimensions initiales. (*quoique... face à des contraintes mémoire...*)
 
 ### chiffres liés à l'architecture
 
