@@ -23,7 +23,7 @@ Ici, je vais placer des notes sur les techniques d'IA avancées (transformers et
 - [GPT](GPT.md)
 - De GPT à ChatGPT
 - [BERT](BERT.md)
-- les [Vision Transformers (ViT)](vit.md)  *en cours de rédaction*
+- les [Vision Transformers (ViT)](vit.md)
     
 ## Remarques glanées ici et là
 
