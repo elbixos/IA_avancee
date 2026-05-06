@@ -23,7 +23,7 @@ Pour fixer les idées, prenons une partie d'échecs :
 
 L'objectif du reinforcement learning est qu'un **agent** (un modèle), apprenne par essai-erreur, comment maximiser les récompenses obtenues par ses actions.
 
-L'essentiel de ce qui est présenté ici est tiré d'un livre : *Reinforcement Learning, by Richard S. Sutton and Andrew Barto*, disponible gratuitement un [ici](http://incompleteideas.net/book/RLbook2020.pdf).
+L'essentiel de ce qui est présenté ici est tiré d'un livre : *Reinforcement Learning, by Richard S. Sutton and Andrew Barto*, disponible gratuitement [ici](http://incompleteideas.net/book/RLbook2020.pdf).
 
 *Une petite remarque* : Il est tentant de considérer l'apprentissage par renforcement comme un apprentissage **non supervisé**, puisqu'on ne cherche pas à aligner les actions de l'agent sur celle d'un professeur. Néanmoins, Sutton considère que non, et qu'**il s'agit d'une classe de problèmes à part**. *Je ne sais pas trop quoi en penser*.
 
