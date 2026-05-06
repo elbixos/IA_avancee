@@ -13,9 +13,10 @@ MathJax = {
 
 L'**Apprentissage par Renforcement**, que l'on appelle aussi *Reinforcement Learning* ou **RL**, est un ensemble de techniques d'apprentissage automatique qui tire parti des résultats d'une **interaction avec un environnement**.
 
-L'objectif est d'associer des situations (les **états**) à des actions à effectuer de façon à maximiser une **récompense** que renvoie l'environnement.
+L'objectif est d'associer des situations (les **états**) à des **actions** à effectuer de façon à maximiser une **récompense** que renvoie l'environnement.
 
-Pour fixer les idées, prenons une partie d'echecs :
+Pour fixer les idées, prenons une partie d'échecs :
+
 - Un état, pour l'apprenant, est la configuration du plateau au moment ou il doit jouer.
 - Il va selectionner une action en fonction de cet état.
 - il recevra une récompense (des points) en fonction de cette action (positive s'il a pris des pièces adverses ou s'il a gagné, par exemple, et négatives s'il s'est fait prendre des pièces ou qu'il a perdu)
@@ -24,7 +25,7 @@ L'objectif du reinforcement learning est qu'un **agent** (un modèle), apprenne 
 
 L'essentiel de ce qui est présenté ici est tiré d'un livre : *Reinforcement Learning, by Richard S. Sutton and Andrew Barto*, disponible gratuitement un [ici](http://incompleteideas.net/book/RLbook2020.pdf).
 
-*Une petite remarque* : S'il est tentant de considérer l'apprentissage par renforcement comme un apprentissage **non supervisé**, puisqu'on ne cherche pas à aligner les actions de l'agent sur celle d'un professeur. Néanmoins, Sutton considère que non, et qu'**il s'agit d'une classe à part**. *Je ne sais pas trop quoi en penser*.
+*Une petite remarque* : Il est tentant de considérer l'apprentissage par renforcement comme un apprentissage **non supervisé**, puisqu'on ne cherche pas à aligner les actions de l'agent sur celle d'un professeur. Néanmoins, Sutton considère que non, et qu'**il s'agit d'une classe de problèmes à part**. *Je ne sais pas trop quoi en penser*.
 
 L'intérêt du RL par rapport aux autres techniques d'IA réside en deux causes :
 
@@ -45,15 +46,14 @@ en plus du livre de Sutton, voici quelques liens concernant le RL.
 - Une explication des [concepts clef](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html)
 - une jolie [taxonomie des techniques de RL](https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html#a-taxonomy-of-rl-algorithms)
 - une longue description des [détails différenciant les differentes techniques de RL](https://lilianweng.github.io/posts/2018-02-19-rl-overview/)
-
 - Un cours en francais sur le RL, [from CNRS Fidle](https://www.youtube.com/watch?v=8gakDXPHC8c)
 
-## quelques définitions
+## Quelques définitions
 
 Pour poser le problème, on considère que notre **agent** évolue dans un **environnement**, par le biais d'**actions**.
 
 A un instant donné, l'agent est considéré comme étant dans un certain **état**,
-et percevant de cet environnement une **observation** (observation et état sont assez similaires)
+et percevant de cet environnement une **observation** (observation et état sont assez similaires, mais l'agent agit parfois en n'ayant qu'une connaissance partielle de l'état)
 
 On définit :
 
@@ -63,7 +63,7 @@ On définit :
 Par exemple, dans un monde déterministe, une action $a_t$ appliquée à un état $s_t$ va conduire à l'état $s_{t+1}$.
 
 L'environnement attribue à l'agent une certaine **récompense** instantanée
-lorsque l'agent, dans un état donnée choisit telle action qui le conduit dans tel autre état.
+lorsque l'agent, dans un état donné choisit telle action qui le conduit dans tel autre état.
 
 - $r$ : la **récompense** associée au passage d'un état à un autre par le biais d'une action. Il s'agit d'une récompense instantannée.
 
@@ -81,13 +81,13 @@ Voyons quelques notions qui vont nous permettre de faire des calculs à partir d
 
 $$G_t = R_{t+1} + R_{t+2} + R_{t+3} ...$$
 
-On peut alors écrire $V(s)$ en fonction de $G_t$ :
+On peut alors écrire $V(s)$ en fonction de $G_t$ : il s'agit de l'esperance de $G_t$, sachant qu'on est dans l'état $s$.
 
-il s'agit de l'esperance de $G_t$, sachant qu'on est dans l'état $s$
-$V(s) = E (G_t \| S_t = s)$
+$$V(s) = E (G_t \| S_t = s)$$
 
 On peut écrire cette équation sous forme récursive :
-$V(s) = E (G_t \| S_t = s) = E (R_{t+1} + R_{t+2} + R_{t+3} ... \| S_t = s) = E (R_{t+1} + V(s_{t+1}) \| S_t = s) $
+
+$$V(s) = E (G_t \| S_t = s) = E (R_{t+1} + R_{t+2} + R_{t+3} ... \| S_t = s) = E (R_{t+1} + V(s_{t+1}) \| S_t = s) $$
 
 ### La Qualité, ou Qvalue d'un couple $s,a$
 
@@ -103,7 +103,7 @@ et récursivement
 $$Q(s,a) = E (R_{t+1} + V(s_{t+1}) \| S_t = s, A_t = a)$$
 
 
-### l'historique de l'agent :
+### L'historique de l'agent :
 
 on stocke toutes les informations que l'agent a rencontré :
 
@@ -117,7 +117,10 @@ Note pour plus tard : dans le cas ou le monde est completement observable, on pe
 
 **C'est assez peu clair...**
 
-C'est markovien si $p(r,s \| s_t, a_t ) = p(r,s \| H_t, a_t )$
+C'est markovien si :
+
+$$p(r,s \| s_t, a_t ) = p(r,s \| H_t, a_t )$$
+
 Ca n'a pas l'air d'être le cas si l'environnement est seulement partiellement observable. ou alors, il faut construire un état à partir de l'historique intelligement...
 
 Si c'est markovien, on peut chercher une stratégie optimale.
@@ -144,31 +147,41 @@ Offre les avantages suivant
 - établit un compromis entre récompense immédiate et récompenses futures mais potentielles.
 
 On parle alors de **Discounted Reward**
-$G_t = R_{t+1} + \gamma R_{t+2} + \gamma ^2 R_{t+3} ...$
+
+$$G_t = R_{t+1} + \gamma R_{t+2} + \gamma ^2 R_{t+3} ...$$
 
 et on garde $V_{\pi}(s) = E(G_t \| S_t=s , \pi)$
 sauf que $G_t$ est le discounted reward.
 
 Comme précédement, on peut prendre sa forme récursive :
-$G_t = R_{t+1} + \gamma G_{t+1}$
 
-$V_{\pi}(s) = E (G_t \| S_t = s, At \sim \pi(s))$
+$$G_t = R_{t+1} + \gamma G_{t+1}$$
+
+On note alors la valeur d'une politique, dans l'état $s$ :
+
+$$V_{\pi}(s) = E (G_t \| S_t = s, At \sim \pi(s))$$
+
 Avec $a \sim \pi(s)$ qui signifie que $a$ est choisie par la politique $\pi$ dans l'état $s$ (influe sur les probabilités de choisir $a$)
 
-On a donc
-$V_{\pi}(s) = E (R_{t+1} + \gamma G_{t+1} \| S_t = s, At \sim \pi(s))$
+On a donc :
+
+$$V_{\pi}(s) = E (R_{t+1} + \gamma G_{t+1} \| S_t = s, At \sim \pi(s))$$
 
 Ce qui donne **l'équation de Bellmann** :
-$V_{\pi}(s) = E (R_{t+1} + \gamma V_{\pi}(s_{t+1}) \| S_t = s, At \sim \pi(s))$
+
+$$V_{\pi}(s) = E (R_{t+1} + \gamma V_{\pi}(s_{t+1}) \| S_t = s, At \sim \pi(s))$$
 
 Cette équation est valable aussi pour les valeurs mesurées par la politique optimale, qui donne le meilleur discounted return à chaque état :
-$V_{\*}(s) = max_a E (R_{t+1} + \gamma V_{\*}(s_{t+1}) \| S_t = s, A_t = a)$
+
+*$V_{\*}(s) = max_a E (R_{t+1} + \gamma V_{\*}(s_{t+1}) \| S_t = s, A_t = a)$*
 
 On peut également écrire l'équation de Bellmann pour la Q_value :
-$Q_{\pi}(s,a) = E (R_{t+1} + \gamma Q_{\pi}(s_{t+1},A_{t+1}) \| S_t = s, At = a)$
 
-et sa version pour la Q_value optimale.
-$Q_{\*}(s,a) = E (R_{t+1} + \gamma max_a' Q_{\*}(s_{t+1,a}) \| S_t = s, At = a)$
+$$Q_{\pi}(s,a) = E (R_{t+1} + \gamma Q_{\pi}(s_{t+1},A_{t+1}) \| S_t = s, At = a)$$
+
+et sa version pour la Q_value optimale :
+
+$$Q_{\*}(s,a) = E (R_{t+1} + \gamma max_a' Q_{\*}(s_{t+1,a}) \| S_t = s, At = a)$$
 
 
 ## Apprentissage itératif
@@ -186,6 +199,7 @@ L'idée est maintenant que
 ## Model
 
 Dans le cas ou l'on dispose d'un modèle, le modèle peut servir à prédire
+
 - l'état suivant : $p(S_{t+1}=s' \| S_t=s, A_t=a)$
 - la récompense immédiate suivante $R_{s,a} = E\[R_{t+1} \| S_t = s, A_t =a\]$
 
@@ -197,8 +211,7 @@ Commencons par les techniques adaptées aux **actions discrètes**
 
 ## Monte carlo learning :
 
-En RL, quand on parle de Monte Carlo Sampling, on parle d'echantilloner des **épisodes complets**.
-un épisode complet est l'ensemble ${(o_i,a_i,r_{i+1})}$, depuis l'état initial, jusqu'à la fin de l'experience (echouée ou réussie, le plus souvent).
+En RL, quand on parle de Monte Carlo Sampling, on parle d'echantilloner des **épisodes complets**. Un épisode complet est l'ensemble ${(o_i,a_i,r_{i+1})}$, depuis l'état initial, jusqu'à la fin de l'expérience (echouée ou réussie, le plus souvent).
 
 On cherche à estimer les valeurs $V(s)$. Ceci peut par exemple être fait à l'aide d'un réseau de neurones. Le même raisonnement s'applique si l'on souhaite estimer $Q(s,a)$.
 
