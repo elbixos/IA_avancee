@@ -92,7 +92,7 @@ Plus précisément, on va calculer :
 
 - $Q = X \times Q^0$
 - $K = X \times K^0$
-- $V = V^0 \times X$
+- $V = X \times V^0$
 
 A noter : les deux matrices $Q^0, K^0$ prennent en entrée des vecteur de dimension $e$, comme ceux de $X$. Elles donnent en sortie des vecteurs de dimension $d$, où $d$ est fixé arbitrairement (nous en parlerons plus loin). Ces deux matrices sont donc de taille $e \times d$
 
@@ -153,7 +153,7 @@ On obtient ainsi la **matrice de pattern d'attention**, de dimension $s \times s
 
 $$A = softmax(\frac{Q \times K^\intercal}{\sqrt(d)})$$
 
-Une ligne de cette matrice, correspondant à un mot de la séquence nous indique donc, pour ce mot, le coefficient de pertinence de chaque autre mot de la phrase. Par exemple :
+Une **ligne** de cette matrice, correspondant à un mot de la séquence nous indique donc, pour ce mot, le coefficient de pertinence de chaque autre mot de la phrase. Par exemple :
 
 ![matrice de pattern d'attention](Images\pattern_attention_textuel.png)
 
@@ -208,16 +208,14 @@ On peut faire tout ceci en une opération matricielle. Ci dessous, juste pour le
 
 On peut alors écrire la valeur de la sortie de notre tête d'attention pour ce mot en particulier :
 
-$$Y_6 = X_6 + V \times A_6$$
+$$Y_6 = X_6 + A_6 \times V$$
 
 De fait, ce calcul peut être fait pour l'ensemble de la séquence, en multipliant
 $V$ par la matrice de pattern d'attention.
 
-$$Y = X + V \times A$$
+$$Y = X + A \times V$$
 
 Voilà pour le principe de l'implémentation d'une tête d'auto attention.
-
-*remarque : j'ai un probleme lié à mes représentations lignes/colonnes. la formule officielle dit :* $Y = X + A \times V$
 
 ### Quelques remarques supplémentaires.
 
@@ -267,7 +265,7 @@ De fait, dans ce cas, il suffit de travailler avec nos trois matrices $Q,K,V$, m
 
 - $Q = X \times Q^0$
 - $K = X' \times K^0$
-- $V = V^0 \times X'$
+- $V = X' \times V^0$   
 
 Le reste se fait de la même façon.
 
