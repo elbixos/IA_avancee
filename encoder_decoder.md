@@ -34,7 +34,7 @@ Enfin, un problème de traduction de texte prend en entrée une séquence (Many)
 
 L'architecture Encodeur/Décodeur a été inventée pour traiter les problèmes de type **Many to Many**, appelés aussi **sequence to sequence**.
 
-Pour tout ce qui suit, nous prendrons l'exemple d'une application de traduction anglais francais, avec comme entrée la phrase "*cats eat mouses*", pour produire en sortie "*les chats mangent avec des souris*".
+Pour tout ce qui suit, nous prendrons l'exemple d'une application de traduction anglais francais, avec comme entrée la phrase "*cats eat mouses*", pour produire en sortie "*les chats mangent des souris*".
 
 ## Rôle de l'encodeur
 
