@@ -263,9 +263,11 @@ Le plus simple est d'imaginer un exemple. On dispose d'une vidéo $X$. On peut i
 
 De fait, dans ce cas, il suffit de travailler avec nos trois matrices $Q,K,V$, mais certaines feront appel à $X$, d'autres à $X'$, comme suit :
 
-- $Q = X \times Q^0$
-- $K = X' \times K^0$
-- $V = X' \times V^0$   
+![schéma attention croisée](Images\cross_attention__webp.png)
+
+- $Q = X \times Q^0$   (utilise les sorties de l'encodeur)
+- $K = X' \times K^0$ (utilise la seconde modalité)
+- $V = X \times V^0$ (utilise les sorties de l'encodeur)
 
 Le reste se fait de la même façon.
 
