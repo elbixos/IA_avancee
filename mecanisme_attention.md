@@ -263,11 +263,13 @@ Le plus simple est d'imaginer un exemple. On dispose d'une vidéo $X$. On peut i
 
 De fait, dans ce cas, il suffit de travailler avec nos trois matrices $Q,K,V$, mais certaines feront appel à $X$, d'autres à $X'$, comme suit :
 
-![schéma attention croisée](Images\cross_attention__webp.png)
+![schéma attention croisée](Images\cross_attention_not_square.png)
 
 - $Q = X \times Q^0$   (utilise les sorties de l'encodeur)
 - $K = X' \times K^0$ (utilise la seconde modalité)
 - $V = X \times V^0$ (utilise les sorties de l'encodeur)
+
+Dans l'image ci dessus, il y a une imprécision (je pense), puisque chaque vecteur en sortie du mécanisme d'attention doit avoir la meme taille que les vecteur de la seconde modalité (en vert)
 
 Le reste se fait de la même façon.
 
