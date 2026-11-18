@@ -269,7 +269,8 @@ De fait, dans ce cas, il suffit de travailler avec nos trois matrices $Q,K,V$, m
 - $K = X' \times K^0$ (utilise la seconde modalité)
 - $V = X \times V^0$ (utilise les sorties de l'encodeur)
 
-Dans l'image ci dessus, il y a une imprécision (je pense), puisque chaque vecteur en sortie du mécanisme d'attention doit avoir la meme taille que les vecteur de la seconde modalité (en vert)
+Dans l'image ci dessus, il y a une imprécision (je pense), puisque chaque vecteur en sortie du mécanisme d'attention doit avoir la meme taille que les vecteur de la seconde modalité (en vert).
+De facon générale, toutes les vecteurs des matrices intermediaires devraient avoir la taille de l'encoding
 
 Le reste se fait de la même façon.
 
